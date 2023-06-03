@@ -1,0 +1,73 @@
+<!-- testing -->
+
+<!-- End TESTING -->
+
+<!-- messages -->
+{% if messages %}
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div class="dialog align-center px-3" id="msg-notify">
+            <div class="dialogContent mainWhite p-4 mx-auto dialogWidth" style="font-family: 'source sans pro';">
+                <div class="mb-3">
+                    <span class="material-icons-round fixIcon3 secondary-color" style="font-size: 32px;">
+                        report
+                    </span>
+                </div>
+                <div>
+                    {{message}}
+                </div>
+                <div>
+                    <button type="button" class="Btn py-2" onclick="dismissMessage()">
+                        <b>Dismiss</b>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+        <div class="dialog align-center px-4" id="msg-notify">
+            <div class="dialogContent p-4 mx-auto dialogWidth" style="font-family: 'source sans pro';">
+                <div class="" style="font-size: 13px;">
+                    <div>
+                        <span class="material-icons-round fixIcon3 greyWhite" style="font-size: 32px;">
+                            error_outline
+                        </span>
+                        {{message}}
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="Btn py-2" onclick="dismissMessage()">
+                        <b>OK</b>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="dialog align-center px-3" id="msg-notify">
+            <div class="dialogContent mainWhite p-4 mx-auto dialogWidth" style="font-family: 'source sans pro';">
+                <div style="font-size: 13px;">
+                    <div>
+                        <svg class="checkmark-green" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark-green__circle" cx="26" cy="26" r="25" fill="none" />
+                            <path class="checkmark-green__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                        </svg>
+                    </div>
+                    <div class="textColor">
+                        {{message}}
+                    </div>
+                </div>
+                <div class="my-3 d-none d-sm-block">
+                    <button type="button" class="Btn px-50" onclick="dismissMessage()" style="width: fit-content;">
+                        <b>OK</b>
+                    </button>
+                </div>
+                <div class="my-3 d-block d-sm-none">
+                    <button type="button" class="Btn py-2" onclick="dismissMessage()">
+                        <b>OK</b>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+<!-- end messages -->

@@ -1,0 +1,63 @@
+{% extends "db/base.html" %}
+{% load static %}
+
+{% block db_content %}
+    <div class="mml col-md-9 col-12 fix-mtSm fix-mt" style="padding-bottom: 60px; font-family: 'source sans pro';">
+        <div class="d-block d-sm-none mb-4">
+            <div class="row mt-2">
+                <div class="col-12 align-center">
+                    <h5 class="reduceH5">
+                        <span class="float-left" onclick="history.go(-1)">
+                            <i class="fi fi-rr-arrow-left fixIcon2 greyWhite2"></i>
+                        </span>
+                        <b>Account Settings</b>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4 border-b">
+            <div class="col-md-3 col-6 align-center activeTabLine">
+                <small>
+                    Security & Privacy
+                </small>
+            </div>
+        </div>
+        <!-- ## -->
+
+        <div class="post-box p-4 no-border-sm" style="font-family: 'source sans pro';">
+            <div>
+                <h5 class="site-yellow reduceH5"><b>Change password</b></h5>
+                <form action="{% url 'change-password' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row mt-4">
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label class="greyWhite">Old Password:</label>
+                                <input type="password" name="cPassword" class="form-control dark-input" required placeholder="Enter current password">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label class="greyWhite">New Password</label>
+                                <input type="password" name="newPassword" class="form-control dark-input" placeholder="Enter new password" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label class="greyWhite">Confirm password</label>
+                                <input type="password" name="cnewPassword" class="form-control dark-input" placeholder="Enter password again" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12" style="margin-top: 23px;">
+                            <button class="Btn py-2" type="submit">
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- ### -->
+    </div>
+{% endblock db_content %}

@@ -1,0 +1,148 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block page_content %}
+<div class="dialog" id="loginMsgs" style="background: rgba(0, 0, 0, 0.5); display: none; font-family: source sans pro;">
+    <div class="dialogContent" id="loaderDiv" style="background: none; box-shadow: none; padding: 0px;">
+        <center>
+            <div class="post-box p-4">
+                <div class="lgn-msg-content"></div>
+                <button class="Btn" onclick="dismissDialog()">Dismiss</button>
+            </div>
+        </center>
+    </div>
+</div>
+
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-lg-6 su-intro-1 d-none d-lg-block">
+                <div class="su-intro-1-overlay">
+                    <div class="p-lg-5 mt-5">
+                        <div class="pr-btn p-5">
+                            <div class="mb-4">
+                                <a href="{% url 'index' %}">
+                                    <img src="https://www3.mtb.com/content/experience-fragments/mtb-web/info-icon-exp-fragment/info-icon-experience-fragment-2/_jcr_content/root/columns/col_1/image.coreimg.png/1601342332140/green-logo.png" alt="united-assets-bank" style="width: 30px; height: 30px;">
+                                    <span class="fixIcon textColor2"><b>M&T Savings</b></span>
+                                </a>
+                            </div>
+                            <h2 class="ubuntu" style="color: #fff;">
+                                <b>Designed for Individual & Institution <span class="secondary-color">.</span> </b>
+                            </h2>
+                            <p>
+                                <small style="color: #d4d6e6;">
+                                    Banking from another universe. <br> Providing Hassle-free monetary solutions
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 su-intro-2 p-0">
+                <div class="su-intro-2-overlay p-lg-5 px-3 pt-4" style="padding-bottom: 80px;">
+                    <div class="d-block d-lg-none">
+                        <a href="{% url 'index' %}">
+                            <img src="https://www3.mtb.com/content/experience-fragments/mtb-web/info-icon-exp-fragment/info-icon-experience-fragment-2/_jcr_content/root/columns/col_1/image.coreimg.png/1601342332140/green-logo.png" alt="united-assets-bank" style="width: 30px; height: 30px;">
+                            <span class="fixIcon"><b>M&T Savings</b></span>
+                        </a>
+                    </div>
+                    <form id="loginForm" action="{% url 'authenticate-user' %}" method="POST" class="lgn-panel-1 form-wrp-shd">
+                        <h5 class="ubuntu">
+                            <b>Account login</b>
+                        </h5>
+                        {% csrf_token %}
+                        <div class="mt-4 row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="greyWhite xsmall sans-pro boldText">Email</label>
+                                    <input type="email" name="user-email" class="form-input add-input-white-bg" value="{{full_name}}" placeholder="Email address" required>
+                                    <input type="hidden" name="next-url" value="{{next_url}}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="greyWhite xsmall sans-pro boldText">Password</label>
+                                    <input type="password" name="password" class="form-input add-input-white-bg" required autocomplete="new-password" placeholder="Enter password" id="id_password">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right" style="cursor: pointer;">
+                            <small class="textColor" onclick="passwordToggleView(this)">
+                                <i class="material-icons-outlined textColor fixIcon3" style="font-size: 18px !important;">check_box_outline_blank</i> 
+                                Show password
+                            </small>
+                        </div>
+                        <div class="mt-4 align-center">
+                            <button type="submit" class="Btn btn-success boldText py-3">
+                                Login
+                            </button>
+                        </div>
+
+                        <div class="mt-3 text-center">
+                            <a href="{% url 'password-reset' %}" style="font-size: 14px;" class="textColor">
+                                Forgot your password? <span class="secondary-color">Reset here</span>
+                            </a>
+                        </div>
+
+
+                        <div style="position: relative;">
+                            <div class="demak-line mt-5"></div>
+                            <small class="demak-line-text">Don't have an account?</small>
+                        </div>
+                        <a href="{% url 'signup-view'  %}">
+                            <button type="button" class="BtnDark py-3 mt-5">
+                                Create account
+                            </button>
+                        </a>
+                    </form>
+
+                    <form class="lgn-panel-2 form-wrp-shd" method="POST" id="verifyPhraseForm" style="display: none;">
+                        <h5 class="ubuntu">
+                            <b>Security Check: Verify its you</b>
+                        </h5>
+                        <div class="mt-4">
+                            <p class="greyWhite xsmall2">
+                                To continue to your account please enter your 3 secret word <b>in order</b>.
+                            </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="primary-color">
+                                    Secret Words <span class="secondary-color">*</span>
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" class="form-control phrase-input">
+                            </div>
+                            <div class="col-4">
+                                <input type="text" class="form-control phrase-input">
+                            </div>
+                            <div class="col-4">
+                                <input type="text" class="form-control phrase-input">
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <small class="redText xsmall2 cd-err-msg" style="display: none;"></small>
+                        </div>
+                        <div class="my-3">
+                            <input type="checkbox" name="trust-device" class="trst-dv fixIcon">
+                            <small class="xsmall">Trust this device for 45 days</small>
+                        </div>
+                        <div class="mt-4">
+                            <button class="Btn py-3">
+                                Continue to dashboard
+                            </button>
+                        </div>
+                        <p class="xsmall2 mt-3 greyWhite">
+                            Login to another account?
+                            <a href="{% url 'login-view' %}">
+                                <span class="primary-color">Retry login</span>
+                            </a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- js -->
+{% endblock page_content %}

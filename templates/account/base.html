@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% if title %}
+        <title>M&T Banking- {{title}}</title>
+    {% else %}
+        <title>M&T Banking- Accounts</title>
+    {% endif %}
+    <link rel="shortcut icon" type="image/jpg" href="/static/assets/images/etf-logo-round.png" />
+    <link rel="stylesheet" href="/static/assets/flaticon/css/uicons-regular-rounded.css">
+    <link rel="stylesheet" href="/static/docs/css/light.css" id="themeCss">
+    <link rel="stylesheet" href="/static/docs/css/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu|Lato|Source Sans Pro|Rajdhani|Roboto">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="/static/vendor/jquery/jquery.js"></script>
+
+    <style>
+        body, html{
+            height: 100%;
+        }
+    </style>
+</head>
+
+
+<body>
+    {% include "comp/message.html" %}
+    <div class="site-container">
+        <!-- loader -->
+        <div class="dialog" id="loader" style="background: rgba(0, 0, 0, 0.8); display: none; font-family: source sans pro;">
+            <div class="dialogContent" id="loaderDiv" style="background: none; box-shadow: none; padding: 0px;">
+                <center>
+                    <div style="width: fit-content;" class="m-auto">
+                        <div class="lds-dual-ring"></div>
+                        <div class="mt-1"><small class="xsmall textColor2">Please wait...</small></div>
+                    </div>
+                </center>
+            </div>
+        </div>
+        <!-- END -->
+
+
+
+        {% block page_content %}
+          
+        {% endblock page_content %}
+    </div>
+    
+
+    <!-- Js -->
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/assets/plugin/jquery/jquery-ui.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/static/docs/js/auth.js"></script>
+    <script src="/static/docs/js/main.js"></script>
+
+    <!-- data aos -->
+    <script>
+        AOS.init();
+    </script>
+
+    <!-- Password toggle -->
+    <script>
+        const passwordToggleView = (e)=>{
+            passwordField = $('#id_password')[0];
+            icon = $(e).find('i')[0];
+            if (passwordField.type == 'text'){
+                passwordField.type = 'password';
+                icon.innerHTML = 'check_box_outline_blank';
+            }else {
+                passwordField.type = 'text';
+                icon.innerHTML = 'check_box';
+            }
+        }
+    </script>
+</body>

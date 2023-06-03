@@ -1,0 +1,142 @@
+{% extends "sa/base.html" %}
+
+{% block content %}
+<div class="col-md-10" style="padding-bottom: 60px; font-family: 'roboto'; min-width: 80%;">
+    {% include 'sa/header-dsktp.html' %}
+
+
+    <div class="border-bottom mb-4 mt-5 mt-lg-0">
+        <div class="px-4 py-3 row">
+            <div class="col-12 text-right">
+                <a class="textColor">
+                    <button data-target="#addNewAccount" data-toggle="modal" class="Btn py-2 xsmall px-4" style="width: fit-content; border-radius: 30px;">
+                        Add new account &nbsp; <i class="fa fa-plus"></i>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row pb-2 fix-mtSm mb-4 px-0 px-sm-4 sans-pro">
+            <div class="col-12 col-md-6">
+                <h5 class="monstText2 primary-color boldText roboto">
+                    All Accounts <span class="badge badge-dark">{{accounts.count}}</span>
+                </h5>
+            </div>
+        </div>
+    
+        <div class="row px-0 px-sm-4">
+            <div class="col-12">
+                <table class="table table-hover table-responsive-sm" id="myTable">
+                    <thead style="white-space: nowrap;">
+                        <tr class="align-center">
+                            <th>Email</th>
+                            <th>Acc No.</th>
+                            <th>Acc Bal.</th>
+                            <th>Full name</th>
+                            <th>Date joined</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody style="white-space: nowrap;">
+                        {% for obj in accounts %}
+                            <tr class="align-center">
+                                <td class="fixIcon3">{{obj.email|truncatechars:22}}</td>
+                                <td class="fixIcon3"><span class="badge badge-light">{{obj.bank_account.account_number}}</span></td>
+                                <td class="fixIcon3"><span class="badge badge-light">${{obj.bank_account.balance}}</span></td>
+                                <td class="fixIcon3"><span class="badge badge-light" style="text-transform: uppercase;">{{obj.fullname}}</span></td>
+                                <td class="xsmall fixIcon3">{{obj.date_joined|date:'M jS o'}}</td>
+                                <td>
+                                    <a href="{% url 'user-detail' obj.id %}" style="text-decoration: none;">
+                                        <button class="Btn btn-success py-2" >Expand</button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <button class="Btn py-2" onclick="fundAccountSetData('{{obj.id}}', '{{obj.bank_account.balance}}', '{{obj.fullname}}')" style="background: #f1ecf7; color: #7224d7;">Fund Account</button>
+                                </td>
+                                <td>
+                                    <button class="Btn py-2" style="background: #f8e4ec; color: #b61a5b;" data-toggle="modal" data-target="#deleteAccount" onclick="setId(this)" id="{{obj.id}}">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ==================== Delete account -->
+<div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog" aria-labelledby="deleteAccount" aria-hidden="true"
+    data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background: none !important;">
+            <div class="modal-body post-box" style="font-family: 'roboto';">
+                <p class="align-center reduceH5">
+                    This account will be deleted. This process is irreversible! <br> Proceed to Delete?
+                </p>
+                <form action="" method="POST" id="deleteAccountForm" class="mt-4">
+                    {% csrf_token %}
+                    <div class="align-center">
+                        <button type="submit" class="Btn" style="width: 40%;">
+                            Yes
+                        </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="Btn red-bg" style="width: 40%;" data-dismiss="modal">
+                            No
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="fundAccount" tabindex="-1" role="dialog" aria-labelledby="fundAccount" aria-hidden="true"
+    data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background: none !important;">
+            <div class="modal-body primary-bg-2 p-0 sans-pro add-radius-2">
+                <p class="textColor m-0 p-4">Edit balance for <span id="tuName" class="primary-color"></span></p>
+                <form action="" method="POST" id="fundAccountForm" class="white-bg2 p-4 add-radius-2">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Account Balance - USD</label>
+                        <input type="number" step="any" name="amount" id="u-c-bal" class="form-input">
+                        <small class="xsmall2 greyWhite2">Enter new balance and save</small>
+                    </div>
+                    <div class="mt-4">
+                        <button class="Btn">Confirm</button>
+                        <p class="mt-3 mb-0 greyWhite2 boldText pointer text-center" data-dismiss="modal">Cancel</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- jS -->
+<script>
+    var deleteAccountForm = document.querySelector('#deleteAccountForm')
+
+    function setId(e) {
+        deleteAccountForm.action = '/site-admin/deleteUserAccount/' + e.id
+    }
+
+    function fundAccountSetData(objId, cUBal, tUN){
+        $('#fundAccountForm')[0].action = '/site-admin/fund-account/' + objId +'/';
+        $('#u-c-bal').attr('placeholder', 'Current Balance - '+'$'+cUBal+'0');
+        $('#tuName').html(tUN);
+        $('#fundAccount').modal('show');
+    }
+</script>
+
+{% endblock content %}

@@ -1,0 +1,70 @@
+{% extends "sa/base.html" %}
+
+{% block db_content %}
+<div class="col-md-9 col-12 px-4" style="padding-bottom: 60px; min-width: 80%;">
+    <div class="border-bottom mb-4 d-none d-sm-block">
+        <div class="px-4 py-3 row">
+            <div class="col-6">
+                <h5>
+                    <i class="fa fa-caret-right"></i>&nbsp;
+                    {{page_title}}
+                </h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="row fix-mtSm">
+        <div class="col-12 px-4">
+            <h5 class="monstText2 site-yellow">
+                Account Verification | Requests &nbsp; <span class="badge badge-light">{{pending.count}}</span>
+            </h5>
+        </div>
+    </div>
+
+    <div class="row mt-4 px-4" id="pendingDeposits">
+        <div class="col-12 mt-4">
+            <table class="table table-hover table-responsive-sm" id="myTable" style="white-space: nowrap;">
+                <thead style="white-space: nowrap;">
+                    <tr>
+                        <th>User account</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Telephone</th>
+                        <th>Employment Status</th>
+                        <th>Data Of Birth</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for account in accounts %}
+                        <tr>
+                            <td>{{account.user|truncatechars:22}}</td>
+                            <td>
+                                <input type="text" value="{{account.user.username}}" class="form-control" readonly>
+                            </td>
+                            <td>
+                                <input type="text" value="{{account.user.last_name}}" class="form-control" readonly>
+                            </td>
+                            <td>
+                                <input type="text" value="{{account.phone_number}}" class="form-control" readonly>
+                            </td>
+                            <td class="align-center">{{account.employment_status}}</td>
+                            <td class="align-center">{{account.date_of_birth}}</td>
+                            <td class="align-center"><b>{{account.status}}</b></td>
+                            <td>
+                                <a href="{% url 'admin-account-verification-detail' account.id %}">
+                                    <button class="Btn px-4" style="width: fit-content;">
+                                        OPEN
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock db_content %}

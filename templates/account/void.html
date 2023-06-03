@@ -1,0 +1,83 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block page_content %}
+    <!-- loader -->
+    <div class="dialog" id="loginLoader" style="background: rgba(0, 0, 0, 0.8); display: none; font-family: source sans pro;">
+        <div class="dialogContent" id="loaderDiv" style="background: none; box-shadow: none; padding: 0px;">
+            <center>
+                <div style="width: fit-content;" class="m-auto">
+                    <div class="lds-dual-ring dark-bg"></div>
+                    <div class="mt-2">
+                        <small class="xsmall textColor2">Smart verification..</small>
+                    </div>
+                </div>
+            </center>
+        </div>
+        <div class="dialogContent py-3 px-50 align-center" id="messageDiv" style="box-shadow: none; display: none; width: fit-content;">
+            
+        </div>
+    </div>
+    <!-- END -->
+
+    <div class="p-lg-4 p-3" style="height: 100%;"> 
+        <div class="post-form mx-auto card-mt p-lg-5 p-4 py-5 mt-md-4" style="font-family: 'roboto'; margin-bottom: 40px;">
+            <div class="text-center mb-4">
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img src="/static/assets/images/fgh-logo.png" alt="logo" style="width:30px; height: 30px">
+                    <span class="sans-pro ml-2 fixIcon">First Group Holding</span>
+                </a>
+            </div>
+            <div class="align-center">
+                <h5 style="font-family: 'ubuntu';" class="boldText">
+                    Log into your account
+                </h5>
+            </div>
+            <form class="mt-30" method="POST" id="loginForm">
+                {% csrf_token %}
+                <div class="greyWhite">
+                    <div id="div_id_username" class="form-group"> 
+                        <label for="id_username" class=" requiredField">
+                            Email address
+                        </label>
+                        <div class="form-group"> 
+                            <input type="email" name="username" autofocus autocapitalize="none" 
+                                maxlength="255" class="dark-input form-control" required id="id_username"> 
+                        </div>
+                    </div>
+                    <div id="div_id_password" class="form-group"> 
+                        <label for="id_password" class=" requiredField">
+                            Password 
+                        </label>
+                        <div class="form-group"> 
+                            <input type="password" name="password" autocomplete="current-password" class="form-control dark-input" required id="id_password"> 
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="mt-2 align-right" style="cursor: pointer;">
+                    <small class="textColor" onclick="passwordToggleView(this)">
+                        <i class="fi fi-rr-eye-crossed textColor fixIcon"></i> 
+                        Show password
+                    </small>
+                </div>
+                <div class="mt-4 align-center">
+                    <button type="submit" class="Btn boldText">
+                        Log In
+                    </button>
+                </div>
+                <div class="mt-4 text-center">
+                    <a href="{% url 'password-reset' %}" style="font-size: 14px;" class="textColor">
+                        Forgot your Password?
+                    </a>
+                </div>
+                <div class="mt-3 greyWhite text-center" style="font-size: 16px;">
+                    Don't have an account? &nbsp;
+                    <a href="{% url 'verify-email' %}" class="site-yellow" style="text-decoration: underline !important;">
+                        Create account
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock page_content %}

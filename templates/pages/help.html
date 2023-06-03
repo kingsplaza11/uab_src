@@ -1,0 +1,65 @@
+{% extends "pages/base.html" %}
+
+
+{% block content %}
+<div class="container">
+    <div class="fix-mt fix-mtSm2">
+        <div class="pt-50">
+            <h2 class="primary-color boldText">
+                Help Center - Contact Support
+            </h2>
+            <p>
+                Reach us today. Create a support ticket to start a conversation
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<div class="container sans-pro mt-5" style="padding-bottom: 60px;">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Select Topic</label>
+            <select name="topic" class="form-input">
+                <option value="Account/Signup/Login">Account/Signup/Login</option>
+                <option value="Account Login Error">Account Login Error</option>
+                <option value="Account Suspension">Account Suspension</option>
+                <option value="Money Transfer">Money Transfer</option>
+                <option value="International Transfers">International Transfers</option>
+                <option value="Our Branches">Our Branches</option>
+                <option value="Open a current account">Open a current account</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Fullname</label>
+            <input type="text" name="fullname" value="{{user.fullname}}" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label>Mobile</label>
+            <input type="tel" name="mobile" class="form-input" value="{{user.phone_number}}" required>
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" autocomplete="new-email" value="{{user.email}}" class="form-input" required>
+        </div>
+        <div class="mt-4 add-radius p-4 primary-bg-2">
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" name="subject" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea name="message" class="form-input" rows="5" required></textarea>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button class="Btn fit-content px-5">Send Message</button>
+        </div>
+    </form>
+</div>
+
+{% include "pages/footer.html" %}
+
+{% endblock content %}

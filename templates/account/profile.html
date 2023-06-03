@@ -1,0 +1,218 @@
+{% extends "bank/base.html" %}
+{% load humanize %}
+
+{% block content %}
+    <div class="col-lg-10 pb-5">
+        {% include 'bank/header-dsktp.html' %}
+
+        <div class="container px-lg-5 safe-area-clear mt-lg-4">
+            <div class="post-box d-block d-lg-none mb-3 shadow-none border-none py-2 fit-content px-4">
+                <i class="fa fa-angle-right"></i>
+                <small class="xsmall2 ml-1"><b>{{page_title}}</b></small>
+            </div>
+            <div class="row sans-pro mt-4 mt-md-0">
+                <div class="col-lg-6">
+                    <div class="post-box shadow-sm border p-0 primary-bg-2">
+                        <div class="text-center p-4">
+                            {% if not user.photo %}
+                            <img src="/static/assets/images/acct.png" style="width: 50px; height: 50px;" class="mb-3">
+                            {% elif user.photo %}
+                            <img src="{{user.photo.url}}" style="width: 50px; height: 50px; border-radius: 50%;" class="mb-3">
+                            {% endif %}
+                            <p class="xsmall m-0 boldText">{{user.fullname}}</p>
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <button class="btn-outline xsmall textColor py-2 border" data-toggle="modal" data-target="#editPhoto">Select Photo</button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="Btn xsmall py-2 border" data-target="#editProfile" data-toggle="modal">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 white-bg2 add-radius-2">
+                            <div class="d-flex mt-3">
+                                <p class="xsmall flex-fill m-0">
+                                    <i class="material-icons-outlined fixIcon3 greyWhite2" style="font-size: 18px !important;">payments</i>
+                                    Current Balance
+                                </p>
+                                <p class="xsmall m-0">${{user.bank_account.balance | intcomma}}0</p>
+                            </div>
+                            <div class="d-flex mt-3">
+                                <p class="xsmall flex-fill m-0">
+                                    <i class="material-icons-outlined fixIcon3 greyWhite2" style="font-size: 18px !important;">admin_panel_settings</i>
+                                    Account Number
+                                </p>
+                                <p class="xsmall m-0">{{user.bank_account.account_number}}</p>
+                            </div>
+                            <div class="d-flex mt-3">
+                                <p class="xsmall flex-fill m-0">
+                                    <i class="material-icons-outlined fixIcon3 greyWhite2" style="font-size: 18px !important;">mail</i>
+                                    Email
+                                </p>
+                                <p class="xsmall m-0">{{user.email}}</p>
+                            </div>
+                            <div class="d-flex mt-3">
+                                <p class="xsmall flex-fill m-0">
+                                    <i class="material-icons-outlined fixIcon3 greyWhite2" style="font-size: 18px !important;">phone</i>
+                                    Mobile
+                                </p>
+                                <p class="xsmall m-0">{{user.phone_number}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-4 mt-md-0">
+                    <div class="post-box p-4 shadow-none border">
+                        <div class="d-flex">
+                            <p class="xsmall flex-fill m-0">
+                                <i class="material-icons-outlined fixIcon3 greyWhite2" style="font-size: 18px !important;">public</i>
+                                Region
+                            </p>
+                            <p class="xsmall m-0">{{user.country}}</p>
+                        </div>
+                        <div class="d-flex mt-3">
+                            <p class="xsmall flex-fill m-0">
+                                <i class="material-icons-outlined fixIcon3 greyWhite2" style="font-size: 18px !important;">location_on</i>
+                                Address</p>
+                            <p class="xsmall m-0">{{user.address}}</p>
+                        </div>
+                        <div class="d-flex mt-3">
+                            <p class="xsmall flex-fill m-0">verification status</p>
+                            <p class="xsmall m-0 boldText">Unverified</p>
+                        </div>
+                    </div>
+                    <div class="post-box p-4 mt-4">
+                        <p class="xsmall flex-fill m-0">
+                            <i class="material-icons-outlined fixIcon3 greyWhite2" style="font-size: 18px !important;">lock</i>
+                            Your Secrete Phrase
+                        </p>
+                        <div class="d-flex border fit-content py-1 px-3 mt-3 add-radius-2">
+                            <p class="xsmall m-0 secondary-color boldText roboto s-p-c">*** *** ***</p>
+                            <p class="xsmall m-0 secondary-color boldText roboto s-ph hide">{{sw}}</p>
+                            <i class="p-1 fa fa-eye-slash ml-3 greyWhite pointer" onclick="secretPhraseReveal(this)"></i>
+                        </div>
+
+                        <p class="xsmall2 mt-3">Do not share this with others. It'll required for assessing your account from unrecognized devices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal -->
+    <div class="modal fade" id="editProfile" tabindex="-1" aria-labelledby="editProfileLbl" aria-hidden="true"
+        data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog sans-pro modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content mx-4" style="background:none;">
+                <div class="modal-body p-0 primary-bg-2 c-trf-box">
+                    <p class="boldText primary-color p-4 m-0">Update account profile</p>
+                    <form action="" method="POST" class="p-4 white-bg2 add-radius-2">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="fullname" class="form-input" value="{{user.fullname}}" required readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Region</label>
+                            {% include 'account/countries.htm' %}
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input type="text" name="address" class="form-input" value="{{user.address}}" required>
+                        </div>
+                        <div class="mt-4">
+                            <button class="Btn py-3">Save changes</button>
+                            <p class="mt-4 mb-0 text-center greyWhite2 boldText pointer" data-dismiss="modal">Cancel</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editPhoto" tabindex="-1" aria-labelledby="editPhotoLbl" aria-hidden="true"
+        data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog sans-pro modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content mx-4" style="background:none;">
+                <div class="modal-body p-0 primary-bg-2 c-trf-box">
+                    <p class="boldText p-4 m-0 text-center">Set account photo</p>
+                    <form action="{% url 'set-photo' %}" method="POST" enctype="multipart/form-data" id="updatePhotoForm">
+                        {% csrf_token %}
+                        <div class="p-4 white-bg2 add-radius-2">
+                            <div class="img-box text-center">
+                                {% if not user.photo %}
+                                <img src="/static/assets/images/acct.png" style="width: 50px; height: 50px;" class="mb-3 dpi">
+                                {% elif user.photo %}
+                                <img src="{{user.photo.url}}" style="width: 50px; height: 50px; border-radius: 50%;" class="mb-3 dpi">
+                                {% endif %}
+                                <img src="/static/assets/images/acct.png" class="d-none mb-3" id="userImageOutput" style="width: 40px; height: 40px; border-radius: 50%;">
+                            </div>
+                            <div class="form-group text-center">
+                                <input type="file" accept="image/*" name="photo" id="userPhotoInput" onchange="previewPhoto(event)" required>
+                                <label for="userPhotoInput" class="btn-outline border textColor py-2 xsmall fit-content px-5">
+                                    Choose New Photo
+                                    <i class="material-icons-outlined ml-2 fixIcon3" style="font-size: 18px !important;">photo_camera</i>
+                                </label>
+                                <small class="xsmall d-block greyWhite">
+                                    <span class="secondary-color">*</span> 
+                                    Maximum accepted size is 1MB
+                                </small>
+                            </div>
+                        </div>
+                        <div class="p-4 text-right">
+                            <button type="button" class="Btn xsmall blankBtn border-none fit-content px-4 boldText" data-dismiss="modal">Cancel</button>
+                            <button class="Btn fit-content xsmall pISB px-4 ml-3" disabled>Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- jS -->
+    <script>
+        function previewPhoto(event) {
+            if(event.target.files[0].size > 1048576){
+                alert("File size should not exceed 1MB!");
+                event.target.value = "";
+            }
+            else{
+                var output = $('#userImageOutput')[0];
+                output.src = URL.createObjectURL(event.target.files[0]);
+                output.onload = function () {
+                    URL.revokeObjectURL(output.src);
+                }
+                $('.dpi').hide();
+                output.classList.remove('d-none');
+                $('.pISB')[0].disabled = false;
+            }
+        };
+
+        // 
+        $('#updatePhotoForm').on('submit', (e)=>{
+            e.preventDefault();
+            $('.pISB')[0].innerHTML = '<i class="fa fa-spin fa-spinner"></i>';
+            setTimeout(() => {
+                $('#updatePhotoForm').unbind('submit').submit();
+                $('.pISB')[0].innerHTML = 'Save changes';
+            }, 1500);
+        })
+        // 
+        function secretPhraseReveal(e) { 
+            $('.s-p-c').hide();
+            $('.s-ph').removeClass('hide');
+            $(e).attr('onclick', 'secretPhraseHide(this)');
+            $(e).addClass('fa-eye'); $(e).removeClass('fa-eye-slash')
+         }
+        function secretPhraseHide(e) { 
+            $('.s-p-c').show();
+            $('.s-ph').addClass('hide');
+            $(e).attr('onclick', 'secretPhraseReveal(this)')
+            $(e).removeClass('fa-eye'); $(e).addClass('fa-eye-slash')
+         }
+    </script>
+
+{% endblock content %}

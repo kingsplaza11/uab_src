@@ -1,0 +1,46 @@
+<!-- SideBar dkp -->
+<div class="col-md-2 side-bar-dsktp shadow-sm sticky-top d-none d-lg-block style-scrollbar pb-4" style="padding:0px">
+    <div class="text-center my-3">
+        <a href="">
+            <img src="https://www3.mtb.com/content/experience-fragments/mtb-web/info-icon-exp-fragment/info-icon-experience-fragment-2/_jcr_content/root/columns/col_1/image.coreimg.png/1601342332140/green-logo.png" alt="M&T bank" style="width: 25px; height: 25px;">
+            <small>M&T Bank</small>
+        </a>
+    </div>
+
+    <div class="mt-4">
+        <!-- <a href="#" class="sb-link">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">dashboard</i>
+            Dashboard
+        </a> -->
+        <a href="{% url 'users' %}" class="sb-link">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">group</i>
+            Users
+        </a>
+        <a href="{% url 'create-logs-view' %}" class="sb-link">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">description</i>
+            Create Logs
+        </a>
+        <a href="{% url 'send-mail' %}" class="sb-link">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">mail</i>
+            Send Email
+        </a>
+        <a href="{% url 'support-messages' %}" class="sb-link">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">contact_support</i>
+            Support Messages
+        </a>
+        <!-- <a class="sb-link pointer" data-toggle="modal" data-target="#addBank">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">add</i>
+            Add Banks
+        </a>
+        <a class="sb-link pointer" href="{% url 'banks-created' %}">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">cases</i>
+            Banks created
+        </a> -->
+        <div class="border-top mt-3 pt-3">
+            <a href="{% url 'logout' %}" class="sb-link">
+                <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">logout</i>
+                Logout
+            </a>
+        </div>
+    </div>
+</div>

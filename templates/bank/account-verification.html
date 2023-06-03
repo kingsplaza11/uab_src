@@ -1,0 +1,327 @@
+{% extends "db/base.html" %}
+
+{% block db_content %}
+    <style>
+        .iti__country-name, .iti__dial-code{
+            color: #000;
+        }
+        .intl-tel-input{
+            width: 100%;
+        }
+        .iti__selected-dial-code{
+            color: rgb(116, 122, 128);
+        }
+
+        .iti {
+            width: 100%;
+        }
+    </style>
+
+
+    <!-- loader -->
+    <div class="dialog" id="validationLoader" style="background: rgba(0, 0, 0, 0.8); display: none;">
+        <div class="dialogContent" style="background: none; box-shadow: none; padding: 0px; font-family: 'source sans pro';">
+            <center>
+                <div style="width: fit-content;" class="m-auto">
+                    <div class="lds-dual-ring dark-bg"></div>
+                    <div class="mt-2">
+                        <small class="xsmall textColor2">Sending Request..</small>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </div>
+    <!-- END -->
+
+    <!-- ==== -->
+    <div class="col-md-10 col-12 fix-mt fix-mtSm px-lg-5" style="padding-bottom: 60px; font-family: 'source sans pro';">
+        <div class="d-block d-sm-none mb-4">
+            <div class="row">
+                <div class="col-3">
+                    <div style="width: fit-content;" class="pr-4" onclick="history.go(-1)">
+                        <span class="material-icons-round">arrow_back</span>
+                    </div>
+                </div>
+                <div class="col-8" style="margin-left: 10px;">
+                    <h5 class="reduceH5 site-yellow">
+                        <b class="greyWhite">Account verification</b>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        {% if user.verification.status == 'declined' %}
+          <div class="post-box mb-4 mt-4 p-4 no-border-sm" style="background-color: #fac4d9;" id="declineInfo">
+              <div class="row">
+                  <div class="col-10">
+                      <h5 class="reduceH5 mt-3" style="color: #d81963;">
+                          Verification was unsuccessful! Please verify again.
+                      </h5>
+                      <small style="color: #d81963;">Ensure all documents are valid & not blurry</small>
+                  </div>
+                  <div class="col-2" onclick="closeDeclineInfo()">
+                      <i class="fa fa-close" style="color: #d81963;"></i>
+                  </div>
+              </div>
+          </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="post-box border-none mt-3 p-3">
+                    <p class="boldText greyWhite">Features</p>
+                    <p class="xsmall2 xsmall">
+                        <i class="fa fa-check greyWhite2 xsmall2 mr-2"></i>
+                        Speedy transaction verification
+                    </p>
+                    <p class="xsmall2 xsmall">
+                        <i class="fa fa-check greyWhite2 xsmall2 mr-2"></i>
+                        Unlock managed support
+                    </p>
+                    <p class="xsmall2 xsmall">
+                        <i class="fa fa-check greyWhite2 xsmall2 mr-2"></i>
+                        Increase daily withdrawal limit to $100,000
+                    </p>
+                    <div class="mt-3 pt-3 border-t">
+                        <p class="xsmall2 xsmall">
+                            <b>Account verification :</b> 
+                            {% if user.verification.is_verified %}
+                            <span class="site-yellow">Verified Account</span>
+                            {% elif not user.verification.is_verified %}
+                            <span class="redText">Unverified</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                {% if user.verification.status == 'waiting' %}
+                <div class="post-box mt-4 p-4 no-border-sm">
+                    <div class="align-center">
+                        <div>
+                            <img src="/static/assets/images/man.png" alt="a-c-i" style="width: 60px; height: 60px;">
+                        </div>
+                        <h5 class="site-yellow mt-3 boldText">
+                            Verification in process...
+                        </h5>
+                        <p>
+                            This might take from few munites to 24 hours. You will be notified accordingly on verification status.
+                        </p>
+                    </div>
+                </div>
+
+                {% elif user.verification.status == 'verified' %}
+                <div class="post-box mt-4 p-4 no-border-sm">
+                    <div class="align-center">
+                        <div>
+                        <img src="/static/assets/images/account_verified.png" alt="a-c-i" style="width: 60px; height: 60px;">
+                        </div>
+                        <h5 class="reduceH5 mt-3">
+                            This account is Verified
+                        </h5>
+                        <p class="greyWhite">
+                            Your account has been successfully Verified. You are eligible to access all services on First Group Holding platforms.
+                        </p>
+                    </div>
+                </div>
+                {% else %}
+                <form action="{% url 'verify-account-func' %}" method="POST" id="accountVerificationForm" class="mt-4" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="post-box" style="padding: 0px;" id="formOne">
+                        <h5 class="p-4 reduceH5 textColor align-center dark-bg2" style="border-radius: 4px 4px 0px 0px;">
+                            Correctly Fill The Form To Complete Verification
+                        </h5>
+                        <div class="px-4 pb-4 mt-4">
+                            <div class="form-group">
+                                <small class="xsmall">Date of birth</small>
+                                <input type="date" class="form-control my-input-form" name="date-of-birth" required>
+                            </div>
+                            <!-- ==> -->
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="greyWhite xsmall">Confirm email address</label>
+                                        <input type="email" class="form-control my-input-form" name="email" value="{{user.email}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="greyWhite xsmall">Phone Number</label>
+                                        <input type="tel" class="form-control my-input-form telInput" name="phone-number" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 align-center">
+                                <button type="button" class="Btn px-50" style="width: fit-content;" onclick="nextForm()">
+                                    Next &nbsp;
+                                    <i class="fa fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ========================================= -->
+                    <div class="post-box no-border-sm" style="padding: 0px; display: none;" id="formTwo">
+                        <h5 class="p-4 reduceH5 textColor align-center dark-bg2" style="border-radius: 4px 4px 0px 0px;">
+                            Correctly Fill The Form To Complete Verification
+                        </h5>
+                        <div class="px-4 pb-4 mt-4">
+                            <h5 class="reduceH5 textColor">
+                                <i class="fa fa-square greyWhite2"></i>&nbsp;
+                                Other Information
+                            </h5>
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <small class="greyWhite xsmall">Current Home Address</small>
+                                        <input type="text" class="form-control" name="home-address" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <small class="greyWhite xsmall">Employment status</small>
+                                        <select name="employment-status" id="" class="form-control">
+                                            <option value="Worker">Worker</option>
+                                            <option value="Employee">Employee</option>
+                                            <option value="Self-employed">Self-employed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <div class="mb-3">
+                                        <small class="xsmall">
+                                            Upload Government Issued Document ( 
+                                                <span class="greyWhite">e.g Drivers License, Passport</span> )
+                                        </small>
+                                    </div>
+                                    <label for="pop" class="site-yellow pointer">
+                                        Choose File &nbsp; <i class="fa fa-file"></i>
+                                    </label>
+                                    <input type="file" class="fixIcon4" name="document" id="pop" style="background: none;" accept="image/*" onchange="loadFile(event)" required>
+                                    <img id="output" class="hide" style="width: 80px; height: 80px;">
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 align-center row">
+                                <div class="col-6">
+                                    <button type="button" class="Btn BtnDark px-4" onclick="prevForm()">
+                                        <i class="fa fa-arrow-left"></i>&nbsp;
+                                        Back
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="Btn add-btn-border px-4">
+                                        Submit &nbsp;<i class="fa fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- js -->
+    <script src="/static/vendor/jquery/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.5/js/utils.js"></script>
+
+    <script>
+        const phoneInputField = document.querySelector(".telInput");
+        countryCode = localStorage.getItem('userCountry')
+
+        if (countryCode == null){
+            countryCode = 'auto'   
+        }
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            separateDialCode : true,
+            // geoIpLookup: getIp,
+            initialCountry: countryCode,
+
+            geoIpLookup: function(success, failure) {
+                countryCode = localStorage.getItem('userCountry')
+                if (countryCode == null){
+                    $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : "us";
+                    localStorage.setItem('userCountry', resp.country)
+                    success(countryCode);
+                    });
+                }
+        }});        
+        
+        // *****>
+
+        function getIp(callback) {
+            fetch('https://ipinfo.io/json?token=<your token>', { headers: { 'Accept': 'application/json' }})
+            .then((resp) => resp.json())
+            .catch(() => {
+                return {
+                country: 'us',
+                };
+            })
+            .then((resp) => callback(resp.country));
+            }
+    </script>
+
+    <!-- more Js -->
+    <script>
+        function nextForm(){
+            var count = 0
+            $('.my-input-form').each(function(){
+                if($(this).val().length > 1){
+                    count ++
+                }
+            })
+            if(count == 3){
+                form_is_valid = true
+            }
+            else if(count < 3)(
+                form_is_valid = false
+            )
+            if(form_is_valid){
+                $('#formOne').hide()
+                $('#formTwo').show('slide', {direction:'right'}, 300)
+            }
+        }
+
+        function prevForm(){
+            $('#formTwo').hide()
+            $('#formOne').show('slide', {direction:'left'}, 300)
+        }
+    </script>
+
+    <script>
+        function loadFile(event) {
+        var output = document.querySelector('#output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function (){
+            URL.revokeObjectURL(output.src);
+        }
+        output.classList.remove('hide');
+    };
+    </script>
+
+    <script>
+        const closeDeclineInfo = ()=>{
+            $('#declineInfo').hide('slide', {direction:'left'}, 200)
+        }
+
+        $('#accountVerificationForm').on('submit', (e)=>{
+            e.preventDefault()
+            $('#validationLoader').fadeIn(200)
+            
+            setTimeout(function(){
+                $('#accountVerificationForm').unbind('submit').submit()
+                $('#validationLoader').fadeOut(200)
+            }, 1500)
+        })
+    </script>
+
+{% endblock db_content %}

@@ -1,0 +1,79 @@
+<!-- add bank -->
+<div class="modal fade" id="addBank" tabindex="-1" aria-labelledby="addBankLbl" aria-hidden="true"
+    data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog sans-pro modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content mx-4" style="background:none;">
+            <div class="modal-body p-0 primary-bg-2 c-trf-box">
+                <p class="m-0 p-3 text-center boldText primary-color">
+                    Add Bank
+                </p>
+                <form action="{% url 'add-bank' %}" method="POST" class="p-3 white-bg2 add-radius-2"
+                    id="setPinForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="xsmall boldText">Bank Name:</label>
+                        <input type="text" name="bank-name" class="form-input" required
+                            placeholder="Enter bank name">
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button class="Btn">Add Bank</button>
+                        <p class="boldText mt-4 text-center pointer" data-dismiss="modal">Cancel</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- add new account -->
+<div class="modal fade" id="addNewAccount" tabindex="-1" aria-labelledby="addNewAccountLbl" aria-hidden="true"
+    data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog sans-pro modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content mx-4" style="background:none;">
+            <div class="modal-body p-0 primary-bg-2 c-trf-box">
+                <p class="m-0 p-3 text-center boldText primary-color">
+                    Add New Account
+                </p>
+                <form action="{% url 'create-account-admin' %}" method="POST" class="p-3 white-bg2 add-radius-2"
+                    id="setPinForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="xsmall boldText">Full Name:</label>
+                        <input type="text" name="fullname" class="form-input" required
+                            placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label class="xsmall boldText">Email:</label>
+                        <input type="text" name="email" class="form-input" required
+                            placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <label class="xsmall boldText">Password:</label>
+                        <input type="password" name="password1" class="form-input" required
+                            placeholder="Enter Password">
+                    </div>
+                    <div class="form-group">
+                        <label class="xsmall boldText">Bank:</label>
+                        <select name="bank" class="form-input">
+                            <option value="uab">United Assets Savings - This Site</option>
+                            {% for obj in banks %}
+                            <option value="{{obj.name}}">{{obj.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="xsmall boldText">Region:</label>
+                        {% include 'account/countries.htm' %}
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button class="Btn">Create Account</button>
+                        <p class="boldText mt-4 text-center pointer" data-dismiss="modal">Cancel</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

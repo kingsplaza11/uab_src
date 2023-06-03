@@ -1,0 +1,189 @@
+{% extends "auth/base.html" %}
+
+{% block page_content %}
+    <div class="pt-4 pb-50 cont-lg-100" style="height: 100%;">
+        <div class="p-4" style="height: 100%;">
+            <div class="text-center mb-4">
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img src="/static/assets/images/fgh-logo.png" alt="logo" style="width:30px; height: 30px">
+                    <span class="sans-pro ml-2 fixIcon">First Group Holding</span>
+                </a>
+            </div>
+            <div class="post-form mx-auto card-mt p-50 mt-md-4" style="font-family: 'roboto'; margin-bottom: 40px;">
+                <div class="first-form">
+                    <div class="align-center mt-4">
+                        <h5 style="font-family: 'ubuntu';">
+                            <b>Create Your Account</b>
+                        </h5>
+                        <p class="greyWhite">Please Verify your email address to continue</p>
+                    </div>
+                    <form class="mt-30" method="POST" id="firstForm">
+                        <div class="form-group">
+                            <label class="textColor">Email Address</label>
+                            <input type="email" id="emailToVerify" class="form-control dark-input" placeholder="Enter Email" value="{{email}}" required>
+                        </div>
+                        <small class="redText" id="errorMsg1" style="display: none;"></small>
+
+                        <div class="mt-4">
+                            <button class="Btn" id="verifyEmailBtn">
+                                VERIFY EMAIL 
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="second-form" style="display: none;">
+                    <div class="align-center mt-4">
+                        <h5 style="font-family: 'ubuntu';">
+                            <b>Enter Verification Code</b>
+                        </h5>
+                        <p class="greyWhite">Enter the 6-character Code sent to your email</p>
+                    </div>
+                    <form class="mt-30" method="POST" id="secondForm">
+                        <div class="">
+                            <label class="textColor">Verification Code</label><br>
+                            <fieldset class='number-code'>
+                                <div>
+                                  <input type="number" name='code' class='code-input form-control' required/>
+                                  <input type="number" name='code' class='code-input form-control' required/>
+                                  <input type="number" name='code' class='code-input form-control' required/>
+                                  <input type="number" name='code' class='code-input form-control' required/>
+                                  <input type="number" name='code' class='code-input form-control' required/>
+                                  <input type="number" name='code' class='code-input form-control' required/>
+                                </div>
+                              </fieldset>
+                              <small class="redText errorMsg" style="display: none;"></small>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" id="refCode" value="{{ref_code}}" class="form-control" readonly>
+                            <input type="hidden" id="userEmail" class="form-control" readonly>
+                        </div>
+                        <div class="mt-4">
+                            <button class="Btn" id="verifyCodeBtn">
+                                VERIFY CODE
+                            </button>
+                        </div>
+                        <p class="xsmall mt-3 greyWhite">
+                            Did not recieve the Code? Check your <b>Spam messages</b> or 
+                            <a href="{% url 'verify-email' %}" class="site-yellow underline"> <br> Try another Email</a>
+                        </p>
+                    </form>
+                    <a href="" id="signUpLink"><span></span></a>
+                </div>
+
+                <div class="mt-4 align-center">
+                    <small style="font-size: 14px;">
+                        Already registered? <a href="{% url 'login' %}" class="blueText">Login</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jS -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+
+    <script>
+        var generatedCode
+        $('#firstForm').on('submit', (e) => {
+            e.preventDefault()
+            $('#verifyEmailBtn').html(
+                `
+                <i class="material-icons-round fixIcon2 fa-spin" style="font-size: 18px;">
+                    rotate_right
+                </i>
+                `
+            )
+            setTimeout(function () {
+                verifyEmail()
+            }, 500)
+        })
+        // ********>
+        // Verify Code
+        $('#secondForm').on('submit', (e)=>{
+            e.preventDefault()
+            verifyCode()
+        })
+        // ==>
+
+        // SEND CODE
+
+        const verifyEmail = ()=>{
+            $.ajax({
+                type: "POST",
+                url: "{% url 'verify-email-token' %}",
+                data: {
+                    'email':$('#emailToVerify').val()
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response == 'error'){
+                        $('#errorMsg1').html('This email is already associated with another account');
+                        $('#errorMsg1').show()
+                        $('#verifyEmailBtn').html('VERIFY EMAIL')
+                    }
+
+                    else{
+                        $('#userEmail').val(response.email)
+                        generatedCode = response.code
+                        // 
+                        $('.first-form').hide()
+                        $('.second-form').show('slide', {direction:'right'}, 400);
+                    }
+                }
+            });
+        }
+
+        // ******>
+
+        // ***********>
+        const verifyCode = ()=>{
+            // $('.code-input').each(function(){
+            //     userCodeInput.append($(this).val()) 
+            // })
+            const code = [...document.getElementsByClassName('code-input')]
+            .filter(({name})=>name)
+            .map(({value})=>value)
+            .join('')
+            userCodeValue = code
+
+            verificationCode = generatedCode
+            if(userCodeValue === verificationCode){
+                codeMatch = true
+                userEmail = $('#userEmail')
+                refCode = $('#refCode')
+
+                $('#verifyCodeBtn').html(
+                    `
+                    <i class="material-icons-round fixIcon2 fa-spin" style ="font-size: 18px;">
+                        rotate_right
+                    </i>
+                    `
+                )
+
+                $('#signUpLink').attr('href', '/accounts/signup/' + $(userEmail).val() + '=token' + $(refCode).val())
+                setTimeout(function(){
+                    $('#signUpLink span').trigger("click");
+                }, 2000)
+
+            }
+            else{
+                codeMatch = false
+                $('.errorMsg').html('Invalid Code')
+                $('.errorMsg').show()
+            }
+        }
+    </script>
+
+    <script>
+        $('.code-input').on('input', ()=>{
+            $('.errorMsg').hide()
+        })
+        $('#emailToVerify').on('input', ()=>{
+            $('#errorMsg1').hide()
+        })
+    </script>
+
+
+
+{% endblock page_content %}

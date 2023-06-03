@@ -1,0 +1,180 @@
+{% extends "bank/base.html" %}
+
+
+{% block content %}
+    <div class="col-lg-10 pb-5">
+        {% include 'bank/header-dsktp.html' %}
+
+        <div class="container px-lg-5 safe-area-clear mt-lg-4">
+            <div class="post-box d-block d-lg-none mb-3 shadow-none border-none py-2 fit-content px-4">
+                <i class="fa fa-angle-right"></i>
+                <small class="xsmall2 ml-1"><b>{{page_title}}</b></small>
+            </div>
+            <div class="row mt-4 sans-pro">
+                <div class="col-12 mb-4">
+                    <button class="Btn py-2 blankBtn primary-color fit-content px-5 xsmall">Active schemes</button>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="post-box shadow-none p-0 primary-bg">
+                        <p class="p-4 boldText textColor2 m-0">GOLD PACK</p>
+                        <div class="p-4 white-bg2 add-radius-2">
+                            <h5 class="boldText">$2000 - $2999</h5>
+                            <p class="m-0 greyWhite2 mb-2 border-top pt-2 mt-3">Features</p>
+                            <p class="xsmall m-0">
+                                <i class="material-icons secondary-color fixIcon3" style="font-size: 18px !important;">check_circle</i>
+                                15% monthly top up
+                            </p>
+                            <p class="xsmall m-0 mt-2">
+                                <i class="material-icons secondary-color fixIcon3" style="font-size: 18px !important;">check_circle</i>
+                                80% Interest 
+                            </p>
+                            <p class="xsmall m-0 mt-2">
+                                <i class="material-icons secondary-color fixIcon3" style="font-size: 18px !important;">check_circle</i>
+                                180% Compound interest 
+                            </p>
+                            <div class="mt-4">
+                                <button class="Btn py-2 xsmall mr-2 fit-content px-3" style="background: #000;" onclick="triggerPurchasePlan('Gold Plan', '2000', '2999')">
+                                    Purchase Plan
+                                </button>
+                                <!-- <button class="Btn py-2 xsmall blankBtn fit-content px-3">Profit margin</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="post-box shadow-none p-0 secondary-bg">
+                        <p class="p-4 boldText textColor2 m-0">PREMIUM PACK</p>
+                        <div class="p-4 white-bg2 add-radius-2">
+                            <h5 class="boldText">$1000 - $1999</h5>
+                            <p class="m-0 greyWhite2 mb-2 border-top pt-2 mt-3">Features</p>
+                            <p class="xsmall m-0">
+                                <i class="material-icons secondary-color fixIcon3" style="font-size: 18px !important;">check_circle</i>
+                                12.5% monthly top up
+                            </p>
+                            <p class="xsmall m-0 mt-2">
+                                <i class="material-icons secondary-color fixIcon3" style="font-size: 18px !important;">check_circle</i>
+                                50% Interest 
+                            </p>
+                            <p class="xsmall m-0 mt-2">
+                                <i class="material-icons secondary-color fixIcon3" style="font-size: 18px !important;">check_circle</i>
+                                150% Compound interest 
+                            </p>
+                            <div class="mt-4">
+                                <button class="Btn py-2 xsmall mr-2 fit-content px-3" style="background: #000;" onclick="triggerPurchasePlan('Premium Plan', '1000', '1999')">Purchase Plan</button>
+                                <!-- <button class="Btn py-2 xsmall blankBtn fit-content px-3">Profit margin</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="post-box shadow-none p-0 primary-bg-2">
+                        <p class="p-4 boldText m-0">STARTER PACK</p>
+                        <div class="p-4 white-bg2 add-radius-2">
+                            <h5 class="boldText">$10 - $999</h5>
+                            <p class="m-0 greyWhite2 mb-2 border-top pt-2 mt-3">Features</p>
+                            <p class="xsmall m-0">
+                                <i class="material-icons secondary-color fixIcon3" style="font-size: 18px !important;">check_circle</i>
+                                10% monthly top up
+                            </p>
+                            <p class="xsmall m-0 mt-2">
+                                <i class="material-icons secondary-color fixIcon3" style="font-size: 18px !important;">check_circle</i>
+                                20% Interest 
+                            </p>
+                            <p class="xsmall m-0 mt-2">
+                                <i class="material-icons secondary-color fixIcon3" style="font-size: 18px !important;">check_circle</i>
+                                120% Compound interest 
+                            </p>
+                            <div class="mt-4">
+                                <button class="Btn py-2 xsmall mr-2 fit-content px-3" style="background: #000;" onclick="triggerPurchasePlan('Starter Plan', '10', '999')">Purchase Plan</button>
+                                <!-- <button class="Btn py-2 xsmall blankBtn fit-content px-3">Profit margin</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modals -->
+    <div class="modal fade" id="pySchemePurchase" tabindex="-1" aria-labelledby="pySchemePurchase" aria-hidden="true"
+        data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog sans-pro modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content mx-4" style="background:none;">
+                <div class="modal-body p-0 primary-bg-2 c-trf-box">
+                    <div class="px-4 py-3">
+                        <p class="m-0" style="font-family: sans-serif;">
+                            Package - <span class="pyc-pack"></span> 
+                        </p>
+                        <small class="fins-err-txt redText"></small>
+                    </div>
+                    </div>
+
+                    <form action="" method="POST" class="p-4 white-bg2" id="PYSchemeForm">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Amount - USD</label>
+                            <input type="hidden" id="ucBal" value="{{user.bank_account.balance}}">
+                            <input type="number" step="any" name="amount" class="form-input" placeholder="$ Enter amount" id="pyAmount">
+                            <small class="py-err-sc redText"></small>
+                        </div>
+                        <div class="mt-4">
+                            <button class="Btn" disabled>Confirm</button>
+                            <p class="text-center boldText pointer mt-4 mb-0" data-dismiss="modal">Cancel</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JS -->
+    <script>
+        var minAmount, maxAmount
+        var sbBtn = $('#PYSchemeForm').find('button')[0];
+        function triggerPurchasePlan(plan, min, max) { 
+            $('#pyAmount').val(''); $('.py-err-sc').html(''); $('.py-err-sc').hide();
+            $('.pyc-pack').html(plan)
+            $('#pySchemePurchase').modal('show');
+            minAmount = parseFloat(min)
+            maxAmount = parseFloat(max)
+        }
+        $('#pyAmount').on('input', (e)=>{
+            let value = e.target.value
+            $('.py-err-sc').hide();
+            if (value < minAmount){
+                $('.py-err-sc').html('Amount must not be less than $' + minAmount);
+                $('.py-err-sc').show();
+                sbBtn.disabled = true
+            }
+            if (value > maxAmount){
+                $('.py-err-sc').html('Amount must not exceed $' + maxAmount);
+                $('.py-err-sc').show();
+                sbBtn.disabled = true
+            }
+            if (value >= minAmount && value <= maxAmount ){
+                sbBtn.disabled = false
+            }
+        })
+    
+        $('#PYSchemeForm').on('submit', (e)=>{
+            $('#loader').fadeIn(300);
+            e.preventDefault();
+            setTimeout(()=>{submitPySchemeRequest()}, 1500)            
+        })
+        function submitPySchemeRequest(){
+            userAccountBalance = '{{user.bank_account.balance}}';
+            amountEntered = parseFloat($('#pyAmount').val());
+            if (amountEntered > userAccountBalance){
+                $('#loader').fadeOut(200)
+                $('.fins-err-txt').html('You do not have sufficient fund for this program!');
+                $('.fins-err-txt').show();
+                setTimeout(()=>{$('.fins-err-txt').hide()}, 3000)
+            }
+            if (amountEntered <= userAccountBalance){
+                $('#PYSchemeForm').unbind('submit').submit();
+                $('#loader').fadeOut(200)
+            }
+        }
+    </script>
+{% endblock content %}

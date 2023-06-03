@@ -1,0 +1,56 @@
+{% load humanize %}
+<!-- account control panel -->
+<div class="account-control-panel-overlay" style="display: none;" onclick="closeAccountMangt()"></div>
+<div class="account-control-panel post-box p-0" style="padding: 0px; display: none; box-shadow: none; font-family: 'source sans pro';">
+    <div>
+        <!-- <a href="#" class="mainWhite">
+            <div class="a-p-inner px-3 py-1 mt-3 textColor">
+                <i class="material-icons-outlined fixIcon3" style="font-size: 18px;">fact_check</i>&nbsp;&nbsp;
+                Verification
+                {% if not user.verification or user.verification.status == 'declined' %}
+                &nbsp;<span class="badge badge-danger">1</span>
+                {% endif %}
+            </div>
+        </a> -->
+        <div class="border-bottom p-3">
+            <i class="material-icons-outlined primary-color fixIcon3" style="font-size: 18px !important;">admin_panel_settings</i>
+            <small class="xsmall2">Hello, {{user.fullname|truncatechars:16}}</small>
+        </div>
+        <a href="{% url 'profile'  %}" class="mainWhite" >
+            <div class="a-p-inner px-3 py-2 pb-3 textColor" style="border-radius: 6px 6px 0px 0px;">
+                <i class="material-icons fixIcon3" style="font-size: 18px;">person</i>&nbsp;&nbsp;
+                <small class="xsmall">My Profile</small>
+            </div>
+        </a>
+        <a class="mainWhite pointer" data-toggle="modal" data-target="#changePassword">
+            <div class="a-p-inner px-3 py-2 pb-3 textColor">
+                <i class="material-icons-outlined fixIcon3" style="font-size: 18px;">lock</i>&nbsp;&nbsp;
+                <small class="xsmall">Change Password</small>
+            </div>
+        </a>
+        <a class="mainWhite pointer" data-toggle="modal" data-target="#setPin">
+            <div class="a-p-inner px-3 py-2 pb-3 textColor" style="border-radius: 0px 0px 6px 6px;">
+                <i class="material-icons-outlined fixIcon3" style="font-size: 18px;">key</i>&nbsp;&nbsp;
+                <small class="xsmall">Transfer Pin</small>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+<script>
+    // account management modal
+    const accountMangt = (e)=>{
+        $('.account-control-panel-overlay').fadeIn(150)
+        $('.account-control-panel').show('drop', {direction:'up'}, 200)
+        // $(e).attr('onclick', 'closeAccountMangt(this)')
+    }
+    const closeAccountMangt = (e)=>{
+        $('.account-control-panel-overlay').fadeOut(150)
+        $('.account-control-panel').hide('drop', {direction:'up'}, 200)
+        $(e).attr('onclick', 'accountMangt(this)')
+        $('.accountMangtBtn').each(function(){
+            $(this).attr('onclick', 'accountMangt(this)')
+        })
+    }
+</script>

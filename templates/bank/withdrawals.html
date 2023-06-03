@@ -1,0 +1,91 @@
+{% extends "bank/base.html" %}
+
+
+{% block content %}
+    <div class="col-lg-10 pb-5">
+        {% include 'bank/header-dsktp.html' %}
+
+        <div class="container px-lg-5 safe-area-clear mt-lg-4">
+
+            <p class="boldText roboto primary-color">
+                <img src="/static/assets/images/wwls.png" alt="" style="width: 40px; height: 40px; transform: rotate(20deg);">
+                <span class="fixIcon3">You withdrawal logs</span>
+            </p>
+            {% if logs %}
+            <button class="Btn blankBtn py-2 fit-content px-4 mb-3" onclick="printLogs()">
+                <i class="material-icons-outlined fixIcon3" style="font-size: 18px !important;">print</i>
+                Print
+            </button>
+            {% endif %}
+            <div id="dep-logs-section">
+                <div class="my-3 sans-pro ul-hd d-none">
+                    <h5 class="boldText text-center mb-3 border-bottom pb-3">
+                        <img src="https://www3.mtb.com/content/experience-fragments/mtb-web/info-icon-exp-fragment/info-icon-experience-fragment-2/_jcr_content/root/columns/col_1/image.coreimg.png/1601342332140/green-logo.png" alt="united-assets-savings" style="width: 30px; height: 30px;">
+                        M&T savings Bank
+                    </h5>
+                    <p class="xsmall">Account Name : {{user.fullname}}</p>
+                    <p class="xsmall">Account Number : {{user.bank_account.account_number}}</p>
+                    <p class="xsmall">Date : {{today|date:'M jS o'}}</p>
+                    <p class="xsmall">Document description : Deposit Logs</p>
+                </div>
+                {% if not logs %}
+                <div class="py-5 text-center">
+                    <i class="material-icons greyWhite" style="font-size: 42px !important;">find_in_page</i>
+                    <small class="greyWhite d-block mt-2">Data Not Found</small>
+                </div>
+                {% endif %}
+                {% for obj in logs %}
+                <div class="post-box px-3 mb-3" style="white-space: nowrap; overflow: auto;">
+                    <!--  -->
+                    <div class="row" >
+                        <div class="col-3">
+                            <small class="xsmall2 boldText">Ref Id</small>
+                            <p class="m-0 xsmall xsmall2-mobile">#{{obj.reference_id}}</p>
+                        </div>
+                        <div class="col-3 pl-4 pl-md-0">
+                            <small class="xsmall2 boldText">Amount</small>
+                            <p class="m-0 xsmall xsmall2-mobile primary-color">${{obj.amount}}0</p>
+                        </div>
+                        <div class="col-3">
+                            <small class="xsmall2 boldText">Method</small>
+                            <p class="m-0 xsmall xsmall2-mobile">{{obj.method}}</p>
+                        </div>
+                        <div class="col-3">
+                            <small class="xsmall2 boldText">Date</small>
+                            <p class="m-0 xsmall xsmall2-mobile">{{obj.date|date:'M jS o'}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/assets/plugin/printJS/printThis.js"></script>
+    <script>
+        function printLogs(){
+            $('.ul-hd').removeClass('d-none');
+            setTimeout(()=>{$('.ul-hd').addClass('d-none')}, 1500)
+            let headerContent = `
+            <head>
+                <link rel="stylesheet" href="/static/docs/css/light.css" id="theme">
+                <link rel="stylesheet" href="/static/docs/css/main.css">
+                <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css" media='all'>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Source Sans Pro">
+            </head>
+            `
+            var divContents = $('#dep-logs-section').html();
+            var mainHtmlHeader = $('#dep-logs-section').html();
+            var a = window.open('', 'M&T savings Bank',);
+            a.document.write('<html>');
+            a.document.write(headerContent);
+            a.document.write('<body>');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            setTimeout(()=>{a.print();}, 1500);
+            a.onafterprint = ()=>{a.close()}
+        }
+    </script>
+
+{% endblock content %}

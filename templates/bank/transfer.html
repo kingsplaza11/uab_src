@@ -1,0 +1,226 @@
+{% extends "bank/base.html" %}
+
+
+{% block content %}
+    <div class="col-lg-10 pb-5">
+        {% include 'bank/header-dsktp.html' %}
+        <div class="container sans-pro px-lg-5 safe-area-clear mt-lg-4">
+            <div class="post-box d-block d-lg-none mb-3 shadow-none border-none py-2 fit-content px-4">
+                <i class="fa fa-angle-right secondary-color"></i>
+                <small class="xsmall2 ml-1"><b>Transfer Money :
+                    {% if trf_protocol == 'other-banks' %}
+                        Other Banks
+                    {% else %}
+                        To M&T Savings Bank 
+                    {% endif %}
+                </b>
+                </small>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex">
+                        <p class="boldText xsmall fixIcon5 flex-fill mt-lg-0 d-none d-md-block">
+                            Transfer to M&T Savings Bank Accounts
+                        </p>
+                        <button class="Btn border xsmall2 px-3 py-1 fit-content add-radius" style="background: transparent; color: #59ff7d;">
+                            <i class="material-icons-outlined fixIcon3" style="font-size: 18px !important;">history</i>
+                            Transfer History
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="mt-3 post-box p-3 shadow-none border-none">
+                        <div class="primary-bg-2 add-radius p-3">
+                            <small class="xsmall2 greyWhite">
+                                Allowed daily transfer limit
+                            </small>
+                            <p class="m-0 roboto blackText3 mb-2">$80,000</p>
+                            {% if trf_protocol == 'other-banks' %}
+                            <a href="/core/quick-banking/?transaction=transfer&protocol=united-assets-accounts" class="textColor2 py-2 px-3 xsmall2 primary-bg" style="border-radius: 30px;">
+                                Transfer to M&T Savings Bank accounts <i class="fa fa-angle-right ml-1"></i>
+                            </a>
+                            {% else %}
+                            <a href="/core/quick-banking/?transaction=transfer&protocol=other-banks" class="textColor2 py-2 px-3 xsmall2 primary-bg" style="border-radius: 30px;">
+                                Transfer to other banks <i class="fa fa-angle-right ml-1"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="mt-3">
+                            <div class="d-flex">
+                                <div class="fixIcon3">
+                                    <img src="/static/assets/images/bal.png" alt="" style="width: 40px; height: 40px;">
+                                </div>
+                                <div class="ml-3">
+                                    <small class="greyWhite2 boldText xsmall2">Available balance</small>
+                                    <p class="roboto m-0 boldText blackText3">${{user.bank_account.balance}}0 USD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    {% if user.bank_account.transfer_pin == '----' %}
+                        <div class="post-box mt-4 mt-lg-0 p-4 text-center">
+                            <p class="boldText primary-color">Transfer Pin Required*</p>
+                            <p class="xsmall">
+                                Please setup a transfer pin to proceed
+                            </p>
+                            <div class="mt-4">
+                                <button class="Btn fit-content px-5" data-toggle="modal" data-target="#setPin">Create Pin</button>
+                            </div>
+                        </div>
+                    {% else %}
+                    <div class="mt-4 mt-lg-3 post-box p-0 shadow-none border primary-bg-2">
+                        <div class="add-radius p-3">
+                            <p class="xsmall blackText3 boldText m-0">Enter transfer details</p>
+                            <small class="xsmall greyWhite2"> 
+                                Please fill the form to proceed.
+                            </small>
+                            {% if trf_protocol  == 'other-banks' %}
+                            <small class="xsmall2 greyWhite2 d-block boldText"> 
+                                <span class="secondary-color">*</span> 
+                                International transfer may take 1-2 weeks depending on your bank & country.
+                            </small>
+                            {% endif %}
+                        </div>
+                        <form action="{% url 'transfer-money-func'  %}" class="p-4 white-bg2 add-radius-2" id="cashTransferForm" method="POST">
+                            {% csrf_token %}
+                            <!-- ---- -->
+                            <input type="hidden" value="{{trf_protocol}}" id="trfProtocol">
+                            <!-- ---- -->
+
+                            {% if trf_protocol  != 'other-banks' %}
+                            <div class="form-group">
+                                <label class="xsmall">From Account</label>
+                                <select name="" class="form-input">
+                                    <option>{{user.fullname}} - {{user.bank_account.account_number}}</option>
+                                </select>
+                            </div>
+                            {% endif %}
+                            <div class="form-group">
+                                <label class="xsmall">Account Number</label>
+                                <input type="tel" name="beneficiary" class="form-input ba-details" placeholder="#Enter beneficiary account number" minlength="10" required>
+                            </div>
+                            {% if trf_protocol  == 'other-banks' %}
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="xsmall">Account Name</label>
+                                        <input type="text" name="account-name" class="form-input ba-details" placeholder="Enter account name" id="accountName" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                      <label class="xsmall">Bank Name</label>
+                                      <!-- <select name="bank" class="form-input" id="selectedBank">
+                                          {% for obj in banks %}
+                                          <option value="{{obj.name}}">{{obj.name}}</option>
+                                          {% endfor %}
+                                      </select> -->
+                                      <input type="text" name="bank" class="form-input ba-details" placeholder="Enter bank name" required>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="xsmall">SWIFT Code</label>
+                                        <input type="text" name="swift-code" class="form-input ba-details" placeholder="********" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="xsmall">IBAN Code</label>
+                                        <input type="text" name="iban-code" class="form-input ba-details" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="xsmall">Bank Address</label>
+                                <input type="text" name="bank-address" class="form-input ba-details" placeholder="Enter bank address" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label class="xsmall">Currency</label>
+                                        <select name="currency" class="form-input">
+                                            <option value="USD">USD</option>
+                                            <option value="GBP">GBP</option>
+                                            <option value="EUR">EUR</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-8">
+                                        <label class="xsmall">Amount</label>
+                                        <input type="number" name="amount" class="form-input" step="any" oninput="checkBalLimit(this, '{{user.bank_account.balance}}')" id="trfAmount" required>
+                                         <small class="xsmall2 redText amt-err-txt" style="display: none;"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <input type="hidden" name="bank" id="selectedBank" value="United Assets Savings">
+                            <div class="form-group">
+                                <label class="xsmall">Amount</label>
+                                <input type="number" name="amount" class="form-input" step="any"
+                                    oninput="checkBalLimit(this, '{{user.bank_account.balance}}')" id="trfAmount" required>
+                                <small class="xsmall2 redText amt-err-txt" style="display: none;"></small>
+                            </div>
+                            {% endif %}
+                            <div class="mt-4">
+                                <button class="Btn py-3" disabled>Continue</button>
+                            </div>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal -->
+    <div class="modal fade" id="confirmTransfer" tabindex="-1" aria-labelledby="confirmTransferLbl" aria-hidden="true"
+        data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog sans-pro modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content mx-4" style="background:none;">
+                <div class="modal-body p-0 primary-bg-2 c-trf-box">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="trfOtpModal" tabindex="-1" aria-labelledby="trfOtpModalLbl" aria-hidden="true"
+        data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog sans-pro modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content mx-4" style="background:none;">
+                <div class="modal-body p-0 primary-bg-2">
+                    <div class="px-3">
+                        <p class="m-0 mt-3 boldText roboto primary-color">Sign Transaction - Enter your transfer Pin</p>
+                        <small class="xsmall">
+                           You will transfer $<b id="otp-c-am"></b> 
+                           to <b> <span id="otp-c-name"></span> with Acc No. <span id="otp-c-accn"></span> </b>
+                        </small>
+                    </div>
+                    <form id="confirmTrfForm">
+                        <div class="white-bg2 p-3 mt-3 add-radius-2">
+                            <div class="border-top pt-4 mt-4">
+                                <label class="xsmall boldText roboto">Enter your Transfer PIN</label>
+                                <input type="password" name="trf-pin" class="form-input" placeholder="****" autocomplete="new-password" maxlength="4" minlength="4" required id="trf-pin">
+                                <small class="xsmall2 redText pin-err-txt" style="display: none;"></small>
+                            </div>
+                            <div class="my-3 text-center">
+                                <button class="Btn px-5 fit-content">Confirm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End modal -->
+
+    <!-- jS -->
+    <script src="/static/docs/js/bank.js"></script>
+    
+{% endblock content %}

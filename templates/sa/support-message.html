@@ -1,0 +1,68 @@
+{% extends "sa/base.html" %}
+
+{% block content %}
+<div class="col-md-10" style="padding-bottom: 60px; font-family: 'roboto'; min-width: 80%;">
+    {% include 'sa/header-dsktp.html' %}
+    
+    <div class="mt-lg-5 container sans-pro fix-mtSm3">
+        {% for obj in requests %}
+            <div class="post-box p-4 mb-4">
+                <div class="row">
+                    <div class="col-lg-4 mb-2">
+                        <p class="m-0 xsmall">Fullname : <b>{{obj.fullname}}</b></p>
+                    </div>
+                    <div class="col-lg-4 mb-2">
+                        <p class="m-0 xsmall">email : <b>{{obj.email}}</b></p>
+                    </div>
+                    <div class="col-lg-4 mb-2">
+                        <p class="m-0 xsmall">subject : <b>{{obj.subject}}</b></p>
+                    </div>
+                    <div class="col-lg-4 mb-2">
+                        <p class="m-0 xsmall">Date : <b>{{obj.date_created|date:'M jS o'}}</b></p>
+                    </div>
+                </div>
+                <div class="primary-bg-2 p-4 mt-4 add-radius">
+                    <p class="m-0">{{obj.message}}</p>
+                </div>
+                <div class="mt-4">
+                    <button class="Btn fit-content px-4 xsmall py-2" onclick="closeTicket('{{obj.id}}')">Mark as resolved</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+<!-- modals -->
+<div class="modal fade" id="closeTicket" tabindex="-1" role="dialog" aria-labelledby="closeTicketLbl" aria-hidden="true"
+    data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background: none !important;">
+            <div class="modal-body primary-bg-2 p-0 sans-pro add-radius-2">
+                <p class="textColor m-0 p-4">This issue will be marked as resolved</span></p>
+                <form action="" method="POST" id="closeTicketForm" class="white-bg2 p-4 add-radius-2">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="Btn">Confirm</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="Btn BtnDark" type="button" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jS -->
+<script>
+    function closeTicket(ticket_id){
+        var closeTicketForm = $('#closeTicketForm')[0];
+        closeTicketForm.action = '/site-admin/close-ticket/'+ticket_id;
+        $('#closeTicket').modal('show');
+    }
+</script>
+{% endblock content %}

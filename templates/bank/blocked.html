@@ -1,0 +1,25 @@
+{% extends 'bank/base.html' %}
+
+{% block content %}
+<div class="dialog align-center px-3" id="msg-notify" style="background: rgba(0, 0, 0, 0.8);">
+    <div class="dialogContent mainWhite p-0 primary-bg-2 mx-auto dialogWidth" style="font-family: 'source sans pro';">
+        <div class="p-4">
+            <i class="material-icons secondary-color" style="font-size: 48px !important;">lock_person</i>
+            <h5 class="boldText mt-3">
+                Your account is suspended 
+            </h5>
+        </div>
+        <div class="white-bg2 p-4 add-radius-2">
+            <p class="xsmall greyWhite">
+                Your account has been suspended due to an unclarified issue with your account. 
+            </p>
+            <p class="xsmall greyWhite">
+                This means you can't access your dashboard until issue is rectified. Please contact <b class="primary-color">help@mtbsupport.com</b> for assistance or <b class="primary-color">create a support ticket</b>.
+            </p>
+            <div class="mt-4 text-center">
+                <button class="Btn btn-success fit-content xsmall px-4">Create support ticket</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,113 @@
+<div class="d-block d-sm-none">
+    <div class="overlayDiv" id="overlayDiv" onclick="hideSideBarSm()" style="z-index: 9;"></div>
+
+    <div class="side-bar-mobile" id="sideBarSm" style="display: none; padding-bottom: 10px;">
+        <div class="side-bar-mobile-inner" style="height: 100%; overflow-y: scroll; padding-bottom: 40px;">
+            <div class="mt-2 border-bottom text-right py-2">
+                <i class="material-icons-outlined greyWhite mr-3" style="font-size: 22px !important;" onclick="hideSideBarSm()">close</i>
+            </div>
+            <!-- ******* -->
+    
+            <div class="container-fluid pr-0 pl-3 mt-5">
+                <a href="#" class="textColor xsmall" data-toggle="collapse" data-target="#company">
+                    <div class="side-link px-3 mt-4">
+                        <i class="material-icons-outlined fixIcon2" style="font-size: 18px;">account_balance</i> &nbsp;
+                        Company
+                        <i class="fa fa-angle-down float-right fixIcon4" style="font-size: 18px;"></i>
+                    </div>
+                </a>
+                <!-- transfer options -->
+                <div class="collapse" id="company">
+                    <div class="container">
+                        <div class="mt-3 ml-4">
+                            <a href="{% url 'policy'  %}" class="greyWhite xsmall2">
+                                Privacy Policy
+                            </a>
+                        </div>
+                        <div class="mt-3 ml-4">
+                            <a href="{% url 'terms'  %}" class="greyWhite xsmall2">
+                                Terms and Conditions
+                            </a>
+                        </div>
+                        <div class="mt-3 ml-4">
+                            <a href="/core/quick-banking/?transaction=transfer&protocol=other-banks" class="greyWhite xsmall2">
+                                About
+                            </a>
+                        </div>
+                    </div>
+                </div> 
+                <!-- END Company -->
+
+                <a href="#" class="textColor xsmall" data-toggle="collapse" data-target="#banking">
+                    <div class="side-link px-3 mt-4">
+                        <i class="material-icons-outlined fixIcon2" style="font-size: 18px;">savings</i> &nbsp;
+                        Banking
+                        <i class="fa fa-angle-down float-right fixIcon4" style="font-size: 18px;"></i>
+                    </div>
+                </a>
+                <!-- Banking options -->
+                <div class="collapse" id="banking">
+                    <div class="container">
+                        <div class="mt-3 ml-4">
+                            <a href="{% url 'index' %}#services" class="greyWhite xsmall2">
+                                Services
+                            </a>
+                        </div>
+                        <div class="mt-3 ml-4">
+                            <a href="{% url 'policy' %}#aml-policy" class="greyWhite xsmall2">
+                                AML Policy
+                            </a>
+                        </div>
+                        <!-- <div class="mt-3 ml-4">
+                            <a href="/core/quick-banking/?transaction=transfer&protocol=other-banks" class="greyWhite xsmall2">
+                                Diversity
+                            </a>
+                        </div> -->
+                    </div>
+                </div> 
+                <!-- END Banking -->
+
+                <a href="{% url 'deposit-logs' %}" class="textColor xsmall">
+                    <div class="side-link px-3 mt-4">
+                        <i class="material-icons-outlined fixIcon2" style="font-size: 18px;">rss_feed</i> &nbsp;
+                        Blog
+                    </div>
+                </a>
+                <a href="{% url 'faqs' %}" class="textColor xsmall">
+                    <div class="side-link px-3 mt-4">
+                        <i class="material-icons-outlined fixIcon2" style="font-size: 18px;">quiz</i> &nbsp;
+                        FAQs
+                    </div>
+                </a>
+                <a href="{% url 'deposit-logs' %}" class="textColor xsmall">
+                    <div class="side-link px-3 mt-4">
+                        <i class="material-icons-outlined fixIcon2" style="font-size: 18px;">support_agent</i> &nbsp;
+                        Support
+                    </div>
+                </a>
+            </div>
+            
+            <div class="border-top mt-4 pt-3 pl-4">
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="textColor xsmall">
+                    {% csrf_token %}
+                    <div class="side-link px-3">
+                        <i class="material-icons-round fixIcon2" style="font-size: 18px;">logout</i> &nbsp;
+                        Sign out
+                    </div>
+                </a>
+                {% else %}
+                <a href="{% url 'login-view' %}" class="textColor xsmall">
+                    <div class="side-link px-3">
+                        <i class="material-icons-round fixIcon2" style="font-size: 18px;">logout</i> &nbsp;
+                        Sign In
+                    </div>
+                </a>
+                <a href="{% url 'logout' %}" class="textColor xsmall mt-4 d-block">
+                    <button class="Btn fit-content px-5">Create New Account</button>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

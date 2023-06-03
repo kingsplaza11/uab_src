@@ -1,0 +1,52 @@
+{% extends "sa/base.html" %}
+
+{% block content %}
+<div class="col-md-10" style="padding-bottom: 60px; font-family: 'roboto'; min-width: 80%;">
+    {% include 'sa/header-dsktp.html' %}
+
+
+    <div class="border-bottom mb-4 d-none d-sm-block">
+        <div class="px-4 py-3 row">
+            <div class="col-12 text-right">
+                <a class="textColor">
+                    <button data-target="#addBank" data-toggle="modal" class="Btn py-2 xsmall px-4" style="width: fit-content; border-radius: 30px;">
+                        Add new bank &nbsp; <i class="fa fa-plus"></i>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row pb-2 fix-mtSm mb-4 px-0 px-sm-4 sans-pro">
+        <div class="col-12 col-md-6">
+            <h5 class="monstText2 primary-color">
+                Created Banks &nbsp; <span class="badge badge-light">{{banks_created.count}}</span>
+            </h5>
+            <p class="boldText">
+                Use this data to optionally assign other banks to users you create from the admin panel
+            </p>
+        </div>
+    </div>
+
+    <div class="row px-0 px-sm-4">
+        <div class="col-12">
+            <table class="table table-hover table-responsive-sm" id="myTable">
+                <thead style="white-space: nowrap;">
+                    <tr>
+                        <th>Name</th>
+                        <th>date created.</th>
+                    </tr>
+                </thead>
+                <tbody style="white-space: nowrap;">
+                    {% for obj in banks_created %}
+                        <tr>
+                            <td class="fixIcon3" style="text-transform: uppercase;">{{obj.name}}</td>
+                            <td class="fixIcon3"><span class="badge badge-light">{{obj.date_added|date:'M jS o'}}</span></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

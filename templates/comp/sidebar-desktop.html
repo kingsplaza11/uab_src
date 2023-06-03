@@ -1,0 +1,61 @@
+<!-- SideBar dkp -->
+<div class="col-md-2 side-bar-dsktp shadow-sm sticky-top d-none d-lg-block style-scrollbar pb-4" style="padding:0px">
+    <div class="text-center my-3">
+        <a href="{% url 'index' %}">
+            <img src="https://www3.mtb.com/content/experience-fragments/mtb-web/info-icon-exp-fragment/info-icon-experience-fragment-2/_jcr_content/root/columns/col_1/image.coreimg.png/1601342332140/green-logo.png" alt="united assets bank" style="width: 25px; height: 25px;">
+            <small>M&T Savings Bank</small>
+        </a>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'user-dashboard' %}" class="sb-link">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">dashboard</i>
+            Dashboard
+        </a>
+        <a href="{% url 'deposit-logs' %}" class="sb-link">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">payments</i>
+            Deposits
+        </a>
+        <a href="{% url 'withdrawals-logs'  %}" class="sb-link">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">north_east</i>
+            Withdrawals
+        </a>
+        <!-- Operations -->
+        <a data-toggle="collapse" data-target="#operationsDd" class="pointer sb-link">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">swap_horiz</i>
+            Transfer Money
+            <i class="fa fa-angle-down float-right fixIcon mr-2" style="font-size: 18px;"></i>
+        </a>
+        
+        <div class="collapse" id="operationsDd">
+            <div class="container ml-2">
+                <a href="/core/quick-banking/?transaction=transfer&protocol=united-assets-accounts" class="greyWhite xsmall2 sb-link">
+                    M&T Savings Bank
+                </a>
+                <a href="/core/quick-banking/?transaction=transfer&protocol=other-banks" class="greyWhite xsmall2 sb-link">
+                    Other Banks
+                </a>
+            </div>
+        </div>
+        <a href="{% url 'account-statement' %}" class="pointer sb-link">
+            <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">description</i>
+            Account Statement
+        </a>
+        <div class="border-top mt-3 pt-3">
+            <a href="{% url 'py-scheme' %}" class="sb-link">
+                <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">rocket_launch</i>
+                Earn (PY Scheme)
+            </a>
+        </div>
+        <div class="border-top mt-3 pt-3">
+            <a href="{% url 'support' %}" class="sb-link">
+                <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">contact_support</i>
+                Support
+            </a>
+            <a href="{% url 'logout' %}" class="sb-link">
+                <i class="material-icons-outlined fixIcon2 mr-2" style="font-size: 16px;">logout</i>
+                Logout
+            </a>
+        </div>
+    </div>
+</div>

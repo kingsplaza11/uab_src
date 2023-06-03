@@ -1,0 +1,43 @@
+{% extends "bank/base.html" %}
+
+{% block content %}
+
+<div class="col-lg-10">
+    <div class="dialog" id="loader" style="background: rgba(0, 0, 0, 0.8); font-family: source sans pro;">
+        <div class="dialogContent" id="loaderDiv" style="background: none; box-shadow: none; padding: 0px;">
+            <div class="post-box text-center p-0 mx-auto mt-5 primary-bg-2">
+                <p class="boldText m-0 primary-color roboto p-3">
+                    <i class="d-block material-icons mb-1">lock</i>
+                    Account Security
+                </p>
+                <div class="white-bg2 p-4">
+                    <p class="xsmall">
+                        M&T Banks places a high priority on the security of your account. 
+                    </p>
+                    <p class="xsmall">
+                        An additional layer of security called a 3-secret word passcode is employed to prevent unauthorized access to your online account. Your code phrase is:
+                    </p>
+                    <h5 class="text-center p-3 fit-content mx-auto" style="background: #f5d4dc; color: #e52253;">
+                        {{p_word}}
+                    </h5>
+                    <p class="xsmall mt-4">
+                        Please store your secrete words carefully <b>in the correct order</b>. It'll be required during login from unknown devices.
+                    </p>
+                    <div class="mt-4 pt-4 border-top">
+                        <p class="xsmall text-center">
+                            I have copied it down securely. 
+                        </p>
+                        <a href="{% url 'user-dashboard' %}">
+                            <button class="Btn xsmall">
+                                Continue to Dashboard
+                                <i class="material-icons fixIcon3 ml-3" style="font-size: 18px !important;">arrow_forward</i>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

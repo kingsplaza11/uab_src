@@ -1,0 +1,92 @@
+{% extends "bank/base.html" %}
+
+
+{% block content %}
+    <div class="col-lg-10 pb-5 safe-area-clear">
+        {% include 'bank/header-dsktp.html' %}
+        <div class="mt-lg-5 mt-4 container">
+            <div class="sans-pro post-form shadow-none border mx-auto p-0 primary-bg-2">
+                <div class="p-3">
+                    <svg class="checkmark-green" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark-green__circle" cx="26" cy="26" r="25" fill="none" />
+                        <path class="checkmark-green__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                    </svg>
+                    <p class="secondary-bg xsmall textColor2 p-2 text-center" style="border-radius: 30px;">Transaction Successful!</p>
+                </div>
+                <div class="p-4 white-bg2 add-radius-2">
+                    <div class="row pb-1" style="border-bottom: 1px dashed #dde6f7;">
+                        <div class="col-5">
+                            <p class="xsmall blackText3">Amount</p>
+                        </div>
+                        <div class="col-7 text-right">
+                            <p class="xsmall blackText3">${{amount}}0</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-5">
+                            <p class="xsmall blackText3">Transaction Id</p>
+                        </div>
+                        <div class="col-7 text-right">
+                            <p class="xsmall blackText3 boldText">#{{txn_id}}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-5">
+                            <p class="xsmall blackText3">Type</p>
+                        </div>
+                        <div class="col-7 text-right">
+                            <p class="xsmall blackText3">Fund Transfer</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-5">
+                            <p class="xsmall">Status</p>
+                        </div>
+                        <div class="col-7 text-right">
+                            <p class="xsmall">Successful</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2 pt-1" style="border-bottom: 1px dashed #dde6f7;">
+                        <div class="col-5">
+                            <p class="xsmall">Account Name</p>
+                        </div>
+                        <div class="col-7 text-right">
+                            <p class="xsmall" style="text-transform: uppercase;">{{fullname}}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-5">
+                            <p class="xsmall">Account Number</p>
+                        </div>
+                        <div class="col-7 text-right">
+                            <p class="xsmall">{{acc_no}}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-5">
+                            <p class="xsmall">VAT</p>
+                        </div>
+                        <div class="col-7 text-right">
+                            <p class="xsmall">$1.90</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-5">
+                            <p class="xsmall">Bank</p>
+                        </div>
+                        <div class="col-7 text-right">
+                            <p class="xsmall">{{bank}}</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 row border-top pt-3">
+                        <div class="col-12">
+                            <a href="{% url 'user-dashboard' %}">
+                                <button class="Btn">OK</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

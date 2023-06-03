@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>M&T Bank - {{page_title}} </title>
+    <link rel="stylesheet" href="/static/assets/flaticon/css/uicons-regular-rounded.css">
+    <link rel="stylesheet" href="/static/docs/css/light.css" id="theme">
+    <link rel="stylesheet" href="/static/docs/css/main.css">
+    <link rel="shortcut icon" type="image/jpg" href="https://www3.mtb.com/content/experience-fragments/mtb-web/info-icon-exp-fragment/info-icon-experience-fragment-2/_jcr_content/root/columns/col_1/image.coreimg.png/1601342332140/green-logo.png" />
+    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css" media='all'>
+    <link rel="stylesheet" href="/static/assets/fonts/fontawesome.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu|Roboto|Rajdhani|Open Sans|Lato|Source Sans Pro">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <!-- Tel -->
+    <link rel="stylesheet" href="/static/assets/plugin/jquery/jquery-ui.min.css">
+    <script src="/static/vendor/jquery/jquery.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.16/js/intlTelInput.min.js"></script>
+   <!-- End Tel -->
+    <style>
+        p{
+            font-size: 16px;
+        }
+        body, html{
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include "comp/message.html" %}
+    <div class="site-container">
+
+        <!-- loader -->
+        <div class="dialog" id="loader" style="background: rgba(0, 0, 0, 0.8); display: none; font-family: source sans pro;">
+            <div class="dialogContent" id="loaderDiv" style="background: none; box-shadow: none; padding: 0px;">
+                <center>
+                    <div style="width: fit-content;" class="m-auto">
+                        <div class="lds-dual-ring"></div>
+                        <div class="mt-1"><small class="xsmall textColor2">Please wait...</small></div>
+                    </div>
+                </center>
+            </div>
+        </div>
+        <!-- END -->
+
+        <!-- sidebar Mobile -->
+        {% include "comp/side-bar-mobile.html" %}
+        <!-- End sidebar mobile -->
+
+        <div class="container-fluid db-bg px-0 dwrp-cont" style="height: 100%; overflow-x: hidden;">
+            <div class="db-bg-overlay">
+                <!-- Top Nav Mobile -->
+                <div class="d-block d-lg-none container-fluid fixed-top mobileNavBg py-3" style="z-index: 3;" id="dbNavMobile">
+                    <div class="d-flex">
+                        <div class="flex-fill fixIcon2">
+                            <img src="https://www3.mtb.com/content/experience-fragments/mtb-web/info-icon-exp-fragment/info-icon-experience-fragment-2/_jcr_content/root/columns/col_1/image.coreimg.png/1601342332140/green-logo.png" alt="united-assets-bank" style="width: 25px; height: 25px;">
+                            <span class="fixIcon xsmall2"><b>M&T Savings Bank</b></span>
+                        </div>
+
+                        <i class="material-icons-outlined p-1 fixIcon mr-1" style="font-size: 22px !important; border-radius: 50%; border: 1px solid black;" onclick="accountMangt(this)">person</i>
+
+                        <div class="ml-3 fixIcon2" onclick="openSideBarSm()">
+                            <div class="mt-2" style="width: 25px; height: 2.5px; background: #000; border-radius: 4px;"></div>
+                            <div class="mt-1" style="width: 20px; height: 2.5px; background: #000; border-radius: 4px;"></div>
+                            <div class="mt-1" style="width: 15px; height: 2.5px; background: #000; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Top Nav Mobile -->
+                <div class="row" style="height:100%;">
+                    {% include 'comp/sidebar-desktop.html' %}
+                    {% block content %}{% endblock content %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "comp/manage-account.html" %}
+    {% include 'account/security-modals.html' %}
+
+
+
+
+    <!-- jS -->
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/docs/js/main.js"></script>
+    <script src="/static/assets/plugin/jquery/jquery-ui.min.js"></script>
+    <script>
+        $('#dAmount').on('change', function() {
+        this.value = parseFloat(this.value).toFixed(2);
+    });
+    </script>
+</body>
+</html>

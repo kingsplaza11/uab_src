@@ -1,0 +1,135 @@
+{% extends "sa/base.html" %}
+
+{% block content %}
+<div class="col-md-10" style="padding-bottom: 60px; font-family: 'roboto'; min-width: 80%;">
+    {% include 'sa/header-dsktp.html' %}
+
+    <div class="mb-4 d-none d-sm-block">
+        <div class="px-4 py-3 row">
+            <div class="col-12 text-right">
+                <a href="#" class="textColor">
+                    <button class="Btn py-2 xsmall px-4 secondary-bg" style="width: fit-content; border-radius: 30px;">
+                        delete account &nbsp; <i class="fa fa-plus"></i>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row pb-2 fix-mtSm3 mb-4 px-0 px-sm-4 sans-pro">
+            <div class="col-lg-6">
+                <div class="post p-4 shadow-sm white-bg2 add-radius">
+                    <div class="d-flex">
+                        <p class="xsmall m-0 flex-fill">Full name :</p>
+                        <p class="xsmall m-0">{{tu.fullname}}</p>
+                    </div>
+                    <div class="d-flex mt-3">
+                        <p class="xsmall flex-fill">Email Address :</p>
+                        <p class="xsmall">{{tu.email}}</p>
+                    </div>
+                    <div class="d-flex">
+                        <p class="xsmall flex-fill m-0">Region :</p>
+                        <p class="xsmall m-0">{{tu.country}}</p>
+                    </div>
+                    <div class="d-flex mt-3">
+                        <p class="xsmall flex-fill m-0">Address :</p>
+                        <p class="xsmall m-0">{{tu.address}}</p>
+                    </div>
+                    <div class="mt-3 primary-bg-2 p-3 add-radius">
+                        <div class="d-flex mt-3">
+                            <p class="xsmall flex-fill m-0">Secret Phrase :</p>
+                            <p class="xsmall m-0">{{tu.pass_phrase}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="post p-4 shadow-sm white-bg2 add-radius">
+                    <div class="d-flex">
+                        <p class="xsmall flex-fill m-0">User Selected Bank :</p>
+                        <p class="xsmall m-0" style="text-transform: uppercase;">{{tu.bank_account.bank}}</p>
+                    </div>
+                    <div class="d-flex mt-3">
+                        <p class="xsmall flex-fill m-0">Account Number :</p>
+                        <p class="xsmall m-0">{{tu.bank_account.account_number}}</p>
+                    </div>
+                    <div class="d-flex mt-3">
+                        <p class="xsmall flex-fill">Current Balance :</p>
+                        <p class="xsmall boldText">${{tu.bank_account.balance}}0</p>
+                    </div>
+                    <div class="d-flex">
+                        <p class="xsmall flex-fill m-0">Last login :</p>
+                        <p class="xsmall m-0">{{tu.last_login | date:'F jS o'}}</p>
+                    </div>
+                    <div class="d-flex mt-3">
+                        <p class="xsmall flex-fill m-0">Date registered :</p>
+                        <p class="xsmall m-0">{{tu.date_joined | date:'F jS o'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mt-4">
+                <div class="post-box p-4">
+                    <p class="boldText primary-color">Account Restrictions</p>
+                    <p>
+                        <small>
+                            Define account restrictions. Check the box to enable or uncheck to disable.
+                        </small>
+                    </p>
+                    <form action="{% url 'impose-restriction' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="target_account" class="form-input" value="{{tu}}">
+                        <div class="form-group">
+                            <input type="checkbox" {{bank_blocked}} name="bank-blocked">
+                            <label class="ml-2">Bank Account blocked</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" {{login_blocked}} name="login-blocked">
+                            <label class="ml-2">Prevent Login</label>
+                        </div>
+                        <div class="mt-4">
+                            <button class="Btn px-4 fit-content">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ==================== Delete account -->
+<div class="modal fade" id="deleteAccount" tabindex="-1" role="dialog" aria-labelledby="deleteAccount" aria-hidden="true"
+    data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background: none !important;">
+            <div class="modal-body post-box" style="font-family: 'roboto';">
+                <p class="align-center reduceH5">
+                    This account will be deleted. This process is irreversible! <br> Proceed to Delete?
+                </p>
+                <form action="" method="POST" id="deleteAccountForm" class="mt-4">
+                    {% csrf_token %}
+                    <div class="align-center">
+                        <button type="submit" class="Btn" style="width: 40%;">
+                            Yes
+                        </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="Btn red-bg" style="width: 40%;" data-dismiss="modal">
+                            No
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var deleteAccountForm = document.querySelector('#deleteAccountForm')
+
+    function setId(e) {
+        deleteAccountForm.action = '/admin/deleteUserAccount/' + e.id
+    }
+</script>
+
+{% endblock content %}

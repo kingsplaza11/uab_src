@@ -1,0 +1,125 @@
+<div class="modal fade" id="setPin" tabindex="-1" aria-labelledby="setPinLbl" aria-hidden="true" data-keyboard="false"
+    data-backdrop="static">
+    <div class="modal-dialog sans-pro modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content mx-4" style="background:none;">
+            <div class="modal-body p-0 primary-bg-2 c-trf-box">
+                <p class="m-0 p-3 text-center boldText primary-color">
+                    Setup transfer PIN
+                </p>
+                <form action="{% url 'set-pin' %}" method="POST" class="p-3 white-bg2 add-radius-2" id="setPinForm">
+                    {% csrf_token %}
+                    {% if user.bank_account.transfer_pin != '----' %}
+                    <div class="form-group">
+                        <label class="boldText xsmall">Old Pin</label>
+                        <input type="password" maxlength="4" minlength="4" name="old_pin" class="form-input"
+                            placeholder="Enter Pin" required>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label class="boldText xsmall">Enter Transfer Pin</label>
+                        <input type="password" maxlength="4" minlength="4" name="pin1" class="p-inp form-input"
+                            placeholder="Enter Pin" id="pin1" required autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label class="boldText xsmall">Confirm Pin</label>
+                        <input type="password" maxlength="4" minlength="4" name="pin2" class="p-inp form-input"
+                            placeholder="Re-enter Pin" id="pin2" required>
+                        <small class="redText p-err-txt"></small>
+                    </div>
+                    <div class="mt-4">
+                        <button class="Btn">Confirm</button>
+                        <p class="boldText mt-4 text-center pointer" data-dismiss="modal">Cancel</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- change password -->
+<div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="changePasswordLbl" aria-hidden="true"
+    data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog sans-pro modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content mx-4" style="background:none;">
+            <div class="modal-body p-0 primary-bg-2 c-trf-box">
+                <p class="m-0 p-3 text-center boldText primary-color">
+                    Change Password
+                </p>
+                <form action="{% url 'change-password' %}" method="POST" class="p-3 white-bg2 add-radius-2">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="xsmall boldText">Old Password:</label>
+                        <input type="password" name="cPassword" class="form-input" required
+                            placeholder="Enter current password" autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="xsmall boldText">New Password</label>
+                            <input type="password" name="newPassword" class="form-input"
+                                placeholder="Enter new password" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="xsmall boldText">Confirm password</label>
+                            <input type="password" name="cnewPassword" class="form-input"
+                                placeholder="Enter password again" required>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button class="Btn">Update Password</button>
+                        <p class="boldText mt-4 text-center pointer" data-dismiss="modal">Cancel</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Receive Cash -->
+<div class="modal fade" id="receiveCash" tabindex="-1" aria-labelledby="receiveCashLbl" aria-hidden="true"
+    data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog sans-pro modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content mx-4" style="background:none;">
+            <div class="modal-body p-0 primary-bg-2 c-trf-box">
+                <p class="m-0 p-3 text-center boldText primary-color">
+                    Receive Money <br>
+                    <small>Share Your account number or scan qrcode to copy account number</small>
+                </p>
+                <div class="white-bg2 p-3 text-center">
+                    <small class="xsmall">Account Number</small>
+                    <p>{{user.bank_account.account_number}}</p>
+                    <h5>United Assets Savings</h5>
+                    <div class="fit-content mx-auto shadow-sm">{{a_qr_code|safe}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Js -->
+<script>
+    $('.p-inp').on('input', ()=>{$('.p-err-txt').hide();})
+    $(function(){
+        $('#setPinForm').on('submit', (e)=>{
+            e.preventDefault();
+            subBtn = $('#setPinForm').find('button')[0]
+            $(subBtn).html('<i class="fa fa-spin fa-spinner mr-2"></i> Please wait...')
+            // check pin_match
+            pin1 = $('#pin1').val();
+            pin2 = $('#pin2').val();
+            if (pin1 != pin2){
+                $('.p-err-txt').html('The two PIN do not match!');
+                $('.p-err-txt').show();
+                $(subBtn).html('Confirm')
+            }
+            if (pin1 == pin2){
+                setTimeout(()=>{$('#setPinForm').unbind('submit').submit(); $(subBtn).html('Confirm')}, 1500)   
+            }
+        })
+    })
+</script>

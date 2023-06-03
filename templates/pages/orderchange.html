@@ -1,0 +1,352 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<header class="masthead" aria-labelledby="pageTitle" id="masthead_2731">
+    <div class="masthead__bg">
+        <div class="container">
+            <img src="https://www.mylsb.com/images/triangle-tr-bg.svg" alt="" aria-hidden="true" class="masthead__decoration os-animation" data-os-animation="animate__slideInRight" />
+            <div class="row">
+                <div class="col-lg-4 d-flex flex-column justify-content-center">
+                    
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Bank</a></li>
+                                    <li class="breadcrumb-item">Business</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Change Order Request</li>
+                        </ol>
+                    </nav>
+                    <script type="application/ld+json">
+                        {
+                        "@context": "http://schema.org",
+                        "@type": "BreadcrumbList",
+                        "itemListElement": [
+                        {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "item": {
+                        "@id": "https://www.mylsb.com/",
+                        "name": "Home"
+                        }
+                        },
+                        {"@type": "ListItem","position":2,"item": {"@id": "https://www.mylsb.com/bank","name": "Bank"}},{"@type": "ListItem","position":3,"item": {"@id": "https://www.mylsb.com/bank/business/change-order-request","name": "Change Order Request"}}    ]}
+                    </script>
+                    <h1 id="pageTitle">Change Order Request</h1>
+                </div>
+                    <div class="masthead__ctas">
+                        <div class="masthead__ctas-inner os-animation" data-os-animation="animate__fadeInUp">
+                                <a href="#" class="masthead__cta"  >Contact Us</a>
+                        </div>
+                    </div>
+                <div class="col-lg-6 offset-lg-2">
+                    <img src="https://www.mylsb.com/MyLSB/media/Images/Mastheads/Bank/change-order-request.jpg?ext=.jpg" class="masthead__img" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 masthead__nav-container">
+                
+<nav class="internal-nav dropdown" aria-labelledby="internalNav">
+    <a class="dropdown-toggle" href="#" role="button" id="internalNav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages within: <span class="internal-nav__parent">Change Order Request</span><span class="fas fa-chevron-down" aria-hidden="true"></span></a>
+    <div class="dropdown-menu" aria-labelledby="internalNav">
+    </div>
+</nav>
+            </div>
+        </div>
+    </div>
+</header>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<section class="change-order-request-form" id="change-order-request-form" aria-label="Change Order Request Form">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-1">
+                <form class="needs-validation" method="post" novalidate="novalidate" action="#">
+                    <input id="ConfirmationPage" name="ConfirmationPage" type="hidden" value="/bank/business/change-order-request/thank-you" />
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="NameOfBusiness">Name of Business</label><span class="text-danger">*</span>
+                                <input autocomplete="organization" class="form-control" id="NameOfBusiness" name="NameOfBusiness" required="required" type="text" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="NameOfRequestingIndividual">Name of Requesting Individual</label><span class="text-danger">*</span>
+                                <input autocomplete="name" class="form-control" id="NameOfRequestingIndividual" name="NameOfRequestingIndividual" required="required" type="text" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="PhoneNumber">Phone Number</label><span class="text-danger">*</span>
+                                <input autocomplete="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" required="required" type="tel" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="LastFourOfAccountNumber">Last Four of Account Number</label><span class="text-danger">*</span>
+                                <input class="form-control" id="LastFourOfAccountNumber" maxlength="4" name="LastFourOfAccountNumber" pattern="\d{4}" required="required" type="text" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="Funding">Funding</label><span class="text-danger">*</span>
+                                <select class="custom-select" id="Funding" name="Funding" required="required"><option selected="selected" value="">Select One</option>
+                                <option value="Debit my Account">Debit my Account</option>
+                                <option value="Exchange at Pickup">Exchange at Pickup</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="BankLocationForPickup">Bank Location for Pickup</label><span class="text-danger">*</span>
+                                <select class="custom-select" id="BankLocationForPickup" name="BankLocationForPickup" required="required"><option selected="selected" value="">Select One</option>
+                                <option value="csa-adel@mylsb.com">Adel</option>
+                                <option value="csa-allison@mylsb.com">Allison</option>
+                                <option value="csa-ankeny@mylsb.com">Ankeny</option>
+                                <option value="csa-aplington@mylsb.com">Aplington</option>
+                                <option value="csa-cfip@mylsb.com">Cedar Falls Industrial Park</option>
+                                <option value="csa-cfdt@mylsb.com">Cedar Falls Main Street</option>
+                                <option value="csa-clive@mylsb.com">Clive</option>
+                                <option value="csa-ingersoll@mylsb.com">Des Moines- Ingersoll</option>
+                                <option value="csa-garwin@mylsb.com">Garwin</option>
+                                <option value="csa-greene@mylsb.com">Greene</option>
+                                <option value="csa-grinnell@mylsb.com">Grinnell</option>
+                                <option value="csa-hudson@mylsb.com">Hudson</option>
+                                <option value="csa-lincolngarwin@mylsb.com">Lincoln</option>
+                                <option value="csa-nashua@mylsb.com">Nashua</option>
+                                <option value="csa-reinbeck@mylsb.com">Reinbeck</option>
+                                <option value="csa-tama@mylsb.com">Tama</option>
+                                <option value="csa-waterloo@mylsb.com">Waterloo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="EarliestRequestedDateForPickup">Earliest Requested Date for Pickup</label><span class="text-danger">*</span>
+                                <input class="form-control" id="EarliestRequestedDateForPickup" name="EarliestRequestedDateForPickup" required="required" type="date" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="EarliestRequestedTimeForPickup">Earliest Requested Time for Pickup</label><span class="text-danger">*</span><br />
+                                <em>Please allow at least 90 minutes from time of entry for your order to be processed.</em>
+                                <input class="form-control" id="EarliestRequestedTimeForPickup" name="EarliestRequestedTimeForPickup" required="required" type="time" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" data-val="true" data-val-required="The Transport by pre-arranged Armored Car field is required." id="TransportByPreArrangedArmoredCar" name="TransportByPreArrangedArmoredCar" type="checkbox" value="true" />
+                                    <label for="TransportByPreArrangedArmoredCar">Transport by pre-arranged Armored Car</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="group" aria-labelledby="changeOrder_fieldset_title">
+                        <h3 id="changeOrder_fieldset_title">Change Order:</h3>
+                        <p>Please enter total amount, in value, for each denomination requested.</p>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="Pennies">Pennies</label> <small>($0.50/roll)</small>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control coin" id="Pennies" min="0" name="Pennies" step=".50" type="number" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Nickles">Nickles</label> <small>($2.00/roll)</small>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control coin" id="Nickles" min="0" name="Nickles" step="2" type="number" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Dimes">Dimes</label> <small>($5.00/roll)</small>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control coin" id="Dimes" min="0" name="Dimes" step="5" type="number" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Quarters">Quarters</label> <small>($10.00/roll)</small>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control coin" id="Quarters" min="0" name="Quarters" step="10" type="number" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Halves">Halves</label> <small>($10.00/roll)</small>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control coin" id="Halves" min="0" name="Halves" step="10" type="number" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="DollarCoins">Dollar Coins</label> <small>($25.00/roll)</small>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control coin" id="DollarCoins" min="0" name="DollarCoins" step="25" type="number" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="Dollars">Dollars</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control currency" id="Dollars" min="0" name="Dollars" step="1" type="number" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Fives">Fives</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control currency" id="Fives" min="0" name="Fives" step="5" type="number" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Tens">Tens</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control currency" id="Tens" min="0" name="Tens" step="10" type="number" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Twenties">Twenties</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control currency" id="Twenties" min="0" name="Twenties" step="20" type="number" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Fifties">Fifties</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control currency" id="Fifties" min="0" name="Fifties" step="50" type="number" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Hundreds">Hundreds</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control currency" id="Hundreds" min="0" name="Hundreds" step="100" type="number" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <em>* Halves and Dollar Coins Subject to Availability</em>
+                    </div>
+                    <hr />
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="TotalCoin">Total Coin</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input class="form-control" id="TotalCoin" name="TotalCoin" readonly="readonly" type="text" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="TotalCurrency">Total Currency</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input class="form-control" id="TotalCurrency" name="TotalCurrency" readonly="readonly" type="text" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="TotalChangeOrder">Total Change Order</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input class="form-control" id="TotalChangeOrder" name="TotalChangeOrder" readonly="readonly" type="text" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recaptcha">
+                        <div class="g-recaptcha" data-sitekey="6LdQf7oaAAAAAF1wmQVSR1oL51kFYDgkkf58ToXn"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <em>Only previously authorized individuals will be allowed to retrieve order.</em>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8GQrdRp4_ghJry6IWDBPyGmDYe7Z63ZIq8xObtrevuU04EuelfWFwa4-t6jLokZdFXF-BaXqlf3-46UrzlIcd90DGt49ksyCjd3vF9doar8zmDGDtCQykVAGvUCS1D--KNTkchkPutdNqVO3hjXN-BU" /><input name="TransportByPreArrangedArmoredCar" type="hidden" value="false" /></form>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-1">
+            
+<div class="richtext">
+    <h5 style="text-align: center;">Lincoln Savings Bank is a full-service Central and Northeast Iowa bank dedicated to local customers and communities since 1902.</h5>
+
+</div>
+        </div>
+    </div>
+</div> 
+</main>
+{% endblock %}

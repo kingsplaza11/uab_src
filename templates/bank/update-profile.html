@@ -1,0 +1,155 @@
+{% extends "db/base.html" %}
+
+
+{% block db_content %}
+
+<div class="mml col-md-9 col-12 fix-mt fix-mtSm" style="padding-bottom: 60px; font-family: 'source sans pro';">
+    <div class="d-block d-sm-none mb-4">
+        <div class="row">
+            <div class="col-2">
+                <div style="width: fit-content;" class="pr-4" onclick="history.go(-1)">
+                    <span class="material-icons-round">arrow_back</span>
+                </div>
+            </div>
+            <div class="col-8 align-center">
+                <h5 class="reduceH5"><b>Account Profile</b></h5>
+            </div>
+        </div>
+    </div>
+    <!-- ## -->
+
+    <div class="row px-0 px-sm-4">
+        <div class="col-md-6 col-12">
+            <div class="post-box p-4" style="border: none;">
+                <div class="mb-4">
+                    <small class="greyWhite">Click EDIT to modify account Information</small>
+                </div>
+                <form action="" method="POST" id="updateProfileForm">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="greyWhite2">First Name</label>
+                                <input type="text" class="form-control dark-input" name="username" value="{{user.username}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="greyWhite2">Last Name</label>
+                                <input type="text" class="form-control dark-input" name="last-name" value="{{user.last_name}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="greyWhite2">Country</label>
+                                <div id="countries" class="d-none">
+                                    {% include "auth/countries.htm" %}
+                                </div>
+                                <input type="text" class="form-control dark-input country-blank" value="{{user.country}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="greyWhite2">Phone Number</label>
+                                <input type="text" class="form-control dark-input" name="phone-number" value="{{user.verification.phone_number}}" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="greyWhite2">Address</label>
+                        <input type="text" class="form-control dark-input" name="address" value="{{user.verification.current_home_address}}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="greyWhite2">Employment Status</label>
+                        <input type="text" class="form-control dark-input employment-blank" value="{{user.verification.employment_status}}" readonly>
+                        <div class="employment-options d-none">
+                            <select name="employment-status" class="form-control dark-input">
+                                <option value="Worker">Worker</option>
+                                <option value="Employee">Employee</option>
+                                <option value="Self-employed">Self-employed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-4 row">
+                        <div class="col-6">
+                            <button type="button" class="BtnDark py-2 xsmall" onclick="allowEdit(this)">
+                                <span class="material-icons-round fixIcon" style="font-size: 14px;">edit</span>
+                                Edit
+                            </button>
+                        </div>
+                        <div class="col-12 d-none" id="saveBtn">
+                            <button type="submit" class="Btn save-btn">
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- == -->
+{% if not user.verification.is_verified %}
+    <!-- <div class="dialog" id="investLoader" style="background: rgba(0, 0, 0, 0.8); display: block;">
+        <div class="dialogContent" style="background: none; box-shadow: none; padding: 0px;">
+            <div style="border-radius: 4px;" id="dialogContentInner" class="align-center dark-bg p-4">
+                <h5 class="reduceH5">
+                    Account Verification Required
+                </h5>
+                <p class="greyWhite xsmall">
+                   Please complete identity verification to access all our services
+                </p>
+                <div class="mt-4">
+                    <a href="account-verification">
+                        <button class="Btn">Verify Now</button>
+                    </a>
+                </div>
+                <div class="mt-3">
+                    <a href="{% url 'dashboard' %}" class="greyWhite2 boldText">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- == -->
+{% endif %}
+
+
+<!-- jS -->
+<script src="/static/vendor/jquery/jquery.js"></script>
+<script>
+    const allowEdit=(e)=>{
+        $('.form-control').each(function(){
+            $(this).attr('readonly', false)
+        })
+
+        $('.country-blank').hide()
+        $('.employment-blank').hide()
+        $('.employment-options').removeClass('d-none')
+        $('#countries').removeClass('d-none')
+        // ==>
+        $(e).hide()
+        $('#saveBtn').removeClass('d-none')
+    }
+</script>
+
+<script>
+    $('#updateProfileForm').on('submit', (target)=>{
+        target.preventDefault()
+        $('.save-btn').html('<i class="fa fa-spin fa-spinner"></i> &nbsp; Saving changes...');
+
+        setTimeout(function(){
+            $('#updateProfileForm').unbind('submit').submit();
+            $('.save-btn').html('Save Changes');
+        },2000)
+    });
+
+</script>
+  
+{% endblock db_content %}

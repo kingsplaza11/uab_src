@@ -1,0 +1,56 @@
+{% extends "admin/login.html" %}
+{% load i18n static %}
+
+<!-- style block -->
+{% block extrastyle %}
+{{ block.super }}
+  <style>
+      #header{
+          background: #2a702d;
+      }
+      .button, input[type='submit']{
+          background: #2e7527;
+          width: 100%;
+      }
+      input:focus{
+          outline: #1c5c16;
+      }
+      #content{
+        background: #fff !important;
+      }#main{
+        background: #fff !important;
+      }
+      label{
+        color: #243f1f;
+      }
+      input[type='text']{
+        background: #fff !important; color: #000 !important; caret-color: #37d837 !important;
+      }input[type='password']{
+        background: #fff !important; color: #000 !important; caret-color: #4ad837 !important;
+      }
+  </style>
+{% endblock %}
+<!-- END -->
+
+
+<!-- admin header -->
+{% block branding %}
+  {% block head_title %}
+  <div class="my-1" style="text-align: center;">
+      <img src="https://www3.mtb.com/content/experience-fragments/mtb-web/info-icon-exp-fragment/info-icon-experience-fragment-2/_jcr_content/root/columns/col_1/image.coreimg.png/1601342332140/green-logo.png" alt="ruxfund-logo" style="width: 50px; height: 50px;">
+  </div>
+    <h3 style="color: #fff; font-size: 18px;">FirstGroupHolding Admin Login</h3>
+  {% endblock head_title %}
+{% endblock branding %}
+<!-- END -->
+
+
+<!-- EDIT CONTENT -->
+{% block content_title %}
+  <h5 style="color: #000;">
+    Log In To Site Admin
+  </h5>
+{% endblock content_title %}
+<!-- END -->
+
+

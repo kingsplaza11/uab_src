@@ -1,0 +1,103 @@
+{% extends "sa/base.html" %}
+
+{% block content %}
+<div class="col-md-10" style="padding-bottom: 60px; font-family: 'roboto'; min-width: 80%;">
+    {% include 'sa/header-dsktp.html' %}
+
+    <div class="container py-lg-4">
+        <div class="mb-4 fix-mtSm3">
+            <div class="row">
+                <div class="col-lg-6 d-none d-lg-block"></div>
+                <div class="col-lg-6 text-right">
+                    <button class="Btn py-2 mr-3 fit-content px-4 xsmall lttog" onclick="createLogTab(this, 'cd-log-tab')">Deposit Log</button>
+                    <button class="Btn fit-content px-4 blankBtn xsmall py-2 lttog" onclick="createLogTab(this, 'cw-log-tab')">Withdrawal Log</button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row pb-2 fix-mtSm mb-4 px-0 px-sm-4 sans-pro">
+            <div class="col-12">
+                <div id="cd-log-tab" class="post-box lt p-0 primary-bg-2">
+                    <p class="m-0 p-4 primary-color boldText">Create New Deposit Log</p>
+                    <form action="{% url 'create-logs-func' %}" method="POST" class="white-bg2 p-4 add-radius-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="log_type" value="deposit">
+                        <div class="form-group">
+                            <label>Select Account</label>
+                            <select name="account" class="form-input">
+                                {% for account in account_options %}
+                                <option value="{{account.email}}">{{account.fullname}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount - <b>USD</b></label>
+                            <input type="number" step="any" name="amount" class="form-input" placeholder="Enter amount">
+                        </div>
+                        <div class="form-group">
+                            <label>Method</label>
+                            <select name="method" class="form-input">
+                                <option value="ATM">ATM</option>
+                                <option value="E-Transfer">E-Transfer</option>
+                                <option value="Cash Deposit">Cash Deposit</option>
+                                <option value="Cheque Deposit">Cheque Deposit</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" name="description" class="form-input" placeholder="Short description">
+                        </div>
+                        <div class="mt-4">
+                            <button class="Btn fit-content-lg px-lg-4">Create</button>
+                        </div>
+                    </form>
+                </div>
+    
+                <!-- ========== -->
+                <div id="cw-log-tab" class="post-box lt p-0 primary-bg-2" style="display: none;">
+                    <p class="m-0 p-4 primary-color boldText">Create New Withdrawal Log</p>
+                    <form action="{% url 'create-logs-func' %}" method="POST" class="white-bg2 p-4 add-radius-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="log_type" value="withdrawal">
+                        <div class="form-group">
+                            <label>Select Account</label>
+                            <select name="account" class="form-input">
+                                {% for account in account_options %}
+                                <option value="{{account.email}}">{{account.fullname}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount - <b>USD</b></label>
+                            <input type="number" step="any" name="amount" class="form-input" placeholder="Enter amount">
+                        </div>
+                        <div class="form-group">
+                            <label>Method</label>
+                            <select name="method" class="form-input">
+                                <option value="ATM">ATM</option>
+                                <option value="E-Transfer">E-Transfer</option>
+                                <option value="Cash Deposit">Cash Deposit</option>
+                                <option value="Cheque Deposit">Cheque Deposit</option>
+                            </select>
+                        </div>
+                        <div class="mt-4">
+                            <button class="Btn fit-content-lg px-lg-4">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function createLogTab(e, tab) { 
+        $('.lt').hide();
+        $('.lttog').addClass('blankBtn');
+        $('#'+tab).show('drop', {direction:'down'}, 300);
+        $(e).removeClass('blankBtn');
+     }
+</script>
+
+{% endblock content %}

@@ -1,0 +1,87 @@
+<!-- ## -->
+<div class="d-none d-sm-block">
+    <nav class="navbar navbar-expand-lg py-2 px-4 fixed-top white-bg2" style="z-index:999 !important;">
+        <a class="navbar-brand fixIcon3" href="{% url 'index' %}">
+            <h5 class="textColor" style="font-family:'roboto'; font-size: 16px;">
+                <img src="/static/assets/images/uab-logo.png" alt="logo" style="width:25px; height: 25px">
+                <span class="fixIcon ml-2 textColor">United Assets Savings</span>
+            </h5>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-4" style="font-family:'roboto'; font-size: 14px;">
+                
+            </ul>
+            <ul class="navbar-nav ml-auto fixIcon2 sans-pro" style="font-size: 14px;">
+                <li class="nav-item dropdown fixIcon7">
+                    <a href="#" class="nav-link textColor" data-toggle="dropdown">
+                        Company
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="company">
+                        <a class="dropdown-item" href="{% url 'policy'  %}">Privacy Policy</a>
+                        <a class="dropdown-item" href="{% url 'terms' %}">Terms & Conditions</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'about' %}">About</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown fixIcon7">
+                    <a class="nav-link textColor" href="#">
+                        Blog
+                    </a>
+                </li>
+                
+                <li class="nav-item dropdown fixIcon7">
+                    <a href="#" class="nav-link textColor" data-toggle="dropdown">
+                        Banking
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="company">
+                        <a class="dropdown-item" href="{% url 'index' %}#services">Services</a>
+                        <a class="dropdown-item" href="{% url 'policy' %}#aml-policy">AML Policy</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown fixIcon7">
+                    <a href="#" class="nav-link textColor" data-toggle="dropdown">
+                        Help
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="company">
+                        <a class="dropdown-item" href="{% url 'faqs' %}">FAQs</a>
+                        <a class="dropdown-item" href="{% url 'support' %}">Contact Us</a>
+                        <a class="dropdown-item" href="{% url 'support' %}">Support Ticket</a>
+                    </div>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item fixIcon7">
+                    <a href="{% url 'logout' %}" class="nav-link textColor">
+                        Sign out
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'user-dashboard'  %}" class="nav-link textColor" target="_blank">
+                        <button class="Btn BtnDark py-2 px-4">
+                            Dashboard
+                        </button>
+                    </a>
+                </li>
+                {% else %}
+                    <li class="nav-item mr-2 ml-2">
+                        <a href="{% url 'login-view' %}" class="nav-link textColor mt-2">
+                            Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'signup-view' %}" class="nav-link textColor">
+                            <button class="Btn BtnDark py-2 px-4">
+                                Register
+                            </button>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</div>
+<!-- End header desktop -->

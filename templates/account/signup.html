@@ -1,0 +1,173 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block page_content %}
+    <!-- loader -->
+    <div class="dialog" id="registerLoader" style="background: rgba(0, 0, 0, 0.8); display: none; font-family: source sans pro;">
+        <div class="dialogContent" id="loaderDiv" style="background: none; box-shadow: none; padding: 0px;">
+            <center>
+                <div style="width: fit-content;" class="m-auto">
+                    <div class="lds-ripple"><div></div><div></div></div>
+                    <div class="mt-2">
+                        <small class="xsmall textColor2">Sending request..</small>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </div>
+    <!-- END -->
+
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-lg-6 su-intro-1 d-none d-lg-block">
+                <div class="su-intro-1-overlay p-3">
+                    <div class="p-lg-5 mt-5">
+                        <div class="pr-btn p-5">
+                            <h2 class="ubuntu" style="color: #fff;">
+                                <b>Designed for Individual & Institution <span class="secondary-color">.</span> </b>
+                            </h2>
+                            <p>
+                                <small style="color: #d4d6e6;">
+                                    Banking from another universe. <br> Providing Hassle-free monetary solutions
+                                </small>
+                            </p>
+                            <!-- <button class="Btn mt-4">Create account now</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 su-intro-2 p-0">
+                <div class="su-intro-2-overlay p-lg-5 px-4 pt-4" style="padding-bottom: 80px;">
+                    <div class="d-block d-lg-none">
+                        <img src="/static/assets/images/uab-logo.png" alt="united-assets-bank" style="width: 30px; height: 30px;">
+                        <span class="fixIcon"><b>United Assets Bank</b></span>
+                    </div>
+                    <form action="{% url 'create-account' %}" method="POST" class="form-wrp-shd su-form" id="signupForm">
+                        <h5 class="ubuntu">
+                            <b>Create Your Account</b>
+                        </h5>
+                        {% csrf_token %}
+                        <div class="mt-4 row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="greyWhite xsmall sans-pro boldText">Full Name</label>
+                                    <input type="text" name="fullname" class="form-input add-input-white-bg" value="{{full_name}}" placeholder="Enter full name" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="greyWhite xsmall sans-pro boldText">Email</label>
+                                    <input type="email" name="email" class="form-input add-input-white-bg su-uem" value="{{email}}" placeholder="Email address" autocomplete="off" required>
+                                    <small class="redText su-em-err"></small>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="greyWhite xsmall sans-pro boldText">Region</label>
+                                    {% include "account/countries.htm" %}
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="greyWhite xsmall sans-pro boldText">Phone Number</label>
+                                    <input type="tel" name="phone_number" class="form-input add-input-white-bg" required>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="greyWhite xsmall sans-pro boldText">Password</label>
+                                    <input type="password" name="password1" class="form-input add-input-white-bg su-upw" required autocomplete="new-password">
+                                    <small class="redText su-ps-err"></small>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="greyWhite xsmall sans-pro boldText">Confirm password</label>
+                                    <input type="password" name="password2" class="form-input add-input-white-bg su-cpsw" placeholder="Re-enter password" required>
+                                    <small class="redText su-psc-err"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="form-group">
+                                <input type="checkbox" required>
+                                <small>
+                                    I certify that I am 18 years of age or older,
+                                    and agree to the 
+                                    <a href="#" class="primary-color">User Terms</a> And 
+                                    <a href="#" class="primary-color">Policy Of Use</a>
+                                </small>
+                            </div>
+                        </div>
+                        <div class="mt-4 align-center">
+                            <button type="submit" class="Btn boldText py-3">
+                                Create Account
+                            </button>
+                        </div>
+                        <div style="position: relative;">
+                            <div class="demak-line mt-5"></div>
+                            <small class="demak-line-text">Already registered?</small>
+                        </div>
+                        <a href="{% url 'login-view'  %}">
+                            <button type="button" class="BtnDark py-3 mt-5">
+                                Sign in
+                            </button>
+                        </a>
+                    </form>
+
+                    <form class="verify-email-form form-wrp-shd" method="POST" id="verifyEmailForm" style="display: none;">
+                        <h5 class="ubuntu">
+                            <b>Verify your email address</b>
+                        </h5>
+                        <div class="mt-4">
+                            <p class="greyWhite xsmall2">
+                                We sent a verification code to your email. Enter the code from the email in the field below to complete your account creation.
+                            </p>
+                        </div>
+                        <fieldset class='number-code'>
+                            <label class="primary-color">6-digit code <span class="secondary-color">*</span></label>
+                            <div>
+                                <input type="number" name='code' class='code-input form-control' required />
+                                <input type="number" name='code' class='code-input form-control' required />
+                                <input type="number" name='code' class='code-input form-control' required />
+                                <input type="number" name='code' class='code-input form-control' required />
+                                <input type="number" name='code' class='code-input form-control' required />
+                                <input type="number" name='code' class='code-input form-control' required />
+                            </div>
+                        </fieldset>
+                        <div class="mt-2">
+                            <small class="redText cd-err-msg" style="display: none;"></small>
+                        </div>
+                        <div class="mt-4">
+                            <button class="Btn py-3">
+                                Confirm
+                            </button>
+                        </div>
+                        <p class="xsmall2 mt-3 greyWhite">
+                            Did not receive the Code? Check your Spam messages or 
+                            <a href="#">
+                                <span class="primary-color">Try another email</span>
+                            </a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!-- js -->
+<!-- <script>
+    $('#registerForm').on('submit', (e)=>{
+        e.preventDefault(); $('#registerLoader').fadeIn(120);
+        setTimeout(function(){
+            $('#registerForm').unbind('submit').submit(); $('#registerLoader').fadeOut(120);
+        }, 1500)
+    })
+</script> -->
+
+{% endblock page_content %}
